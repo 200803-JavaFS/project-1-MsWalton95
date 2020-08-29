@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
-public class DirectorDAO {
-	public DirectorDAO() {
+public class UserRoleDAO {
+	public UserRoleDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -37,11 +38,14 @@ public class DirectorDAO {
 		return chara;
 	}
 	
-	public List<Character> selectAll(){
+	public List<UserRole> selectAll(){
 		Session ses = HibernateUtil.getSession();
 		
-		List<Character> charList = ses.createQuery("FROM Director").list();
+		String hql = "FROM ERS_USER_ROLES";
+		List<UserRole> list = ses.createQuery(hql).list();
+		//List results = query.list();
+		//List<UserRole> charList = ses.createQuery("FROM ers_user_roles").list();
 
-		return charList;
+		return list;
 	}
 }

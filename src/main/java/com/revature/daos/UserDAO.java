@@ -8,9 +8,9 @@ import org.hibernate.Transaction;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 
-public class MovieDAO {
+public class UserDAO {
 
-	public MovieDAO() {
+	public UserDAO() {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -38,10 +38,10 @@ public class MovieDAO {
 		return chara;
 	}
 	
-	public User selectByName(String name) {
+	public User selectByName(int id) {
 		Session ses = HibernateUtil.getSession();
 		
-		List<User> charList = ses.createQuery("FROM Movie WHERE name =" + name, User.class).list();
+		List<User> charList = ses.createQuery("FROM ers_users WHERE ers_users_id=" + id, User.class).list();
 		
 		User chara = charList.get(0);
 		
@@ -51,7 +51,7 @@ public class MovieDAO {
 	public List<User> selectAll(){
 		Session ses = HibernateUtil.getSession();
 		
-		List<User> charList = ses.createQuery("FROM Movie").list();
+		List<User> charList = ses.createQuery("user_role FROM ers_users").list();
 
 		return charList;
 	}

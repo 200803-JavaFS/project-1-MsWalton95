@@ -4,88 +4,79 @@ import java.util.List;
 
 import javax.persistence.*;
 @Entity
-@Table(name="directors")
+@Table(name="ers_user_roles")
 public class UserRole {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="dir_id")
-	private int dirID;
+	@Column(name="ers_user_role_id")
+	private int roleID;
 	
-	@Column(name="dir_first_name")
-	private String dirFName;
+	@Column(name="user_role", length=20, nullable=false)
+	private String userRole;
 	
-	@Column(name="dir_last_name")
-	private String dirLName;
-	
-	@OneToMany(mappedBy="dir", fetch=FetchType.EAGER)
-	private List<User> movies;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<User> users;
 	
 	public UserRole() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserRole(int dirID, String dirFName, String dirLName, List<User> movies) {
+	public UserRole(int roleID, String userRole, List<User> users) {
 		super();
-		this.dirID = dirID;
-		this.dirFName = dirFName;
-		this.dirLName = dirLName;
-		this.movies = movies;
+		this.roleID = roleID;
+		this.userRole = userRole;
+		this.users = users;
 	}
 
-	public UserRole(String dirFName, String dirLName, List<User> movies) {
+	public UserRole(String userRole, List<User> users) {
 		super();
-		this.dirFName = dirFName;
-		this.dirLName = dirLName;
-		this.movies = movies;
+		this.userRole = userRole;
+		this.users = users;
+	}
+
+	
+	public UserRole(String userRole) {
+		super();
+		this.userRole = userRole;
 	}
 
 	@Override
 	public String toString() {
-		return "Director [dirID=" + dirID + ", dirFName=" + dirFName + ", dirLName=" + dirLName + ", movies=" + movies
-				+ "]";
+		return "UserRole [roleID=" + roleID + ", userRole=" + userRole + "]";
 	}
 
-	public int getDirID() {
-		return dirID;
+	public int getRoleID() {
+		return roleID;
 	}
 
-	public void setDirID(int dirID) {
-		this.dirID = dirID;
+	public void setRoleID(int roleID) {
+		this.roleID = roleID;
 	}
 
-	public String getDirFName() {
-		return dirFName;
+	public String getUserRole() {
+		return userRole;
 	}
 
-	public void setDirFName(String dirFName) {
-		this.dirFName = dirFName;
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 
-	public String getDirLName() {
-		return dirLName;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setDirLName(String dirLName) {
-		this.dirLName = dirLName;
-	}
-
-	public List<User> getMovies() {
-		return movies;
-	}
-
-	public void setMovies(List<User> movies) {
-		this.movies = movies;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dirFName == null) ? 0 : dirFName.hashCode());
-		result = prime * result + dirID;
-		result = prime * result + ((dirLName == null) ? 0 : dirLName.hashCode());
-		result = prime * result + ((movies == null) ? 0 : movies.hashCode());
+		result = prime * result + roleID;
+		result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
+		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
 
@@ -98,25 +89,19 @@ public class UserRole {
 		if (getClass() != obj.getClass())
 			return false;
 		UserRole other = (UserRole) obj;
-		if (dirFName == null) {
-			if (other.dirFName != null)
-				return false;
-		} else if (!dirFName.equals(other.dirFName))
+		if (roleID != other.roleID)
 			return false;
-		if (dirID != other.dirID)
-			return false;
-		if (dirLName == null) {
-			if (other.dirLName != null)
+		if (userRole == null) {
+			if (other.userRole != null)
 				return false;
-		} else if (!dirLName.equals(other.dirLName))
+		} else if (!userRole.equals(other.userRole))
 			return false;
-		if (movies == null) {
-			if (other.movies != null)
+		if (users == null) {
+			if (other.users != null)
 				return false;
-		} else if (!movies.equals(other.movies))
+		} else if (!users.equals(other.users))
 			return false;
 		return true;
 	}
-	
 	
 }
