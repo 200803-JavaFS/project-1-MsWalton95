@@ -13,7 +13,7 @@ import com.revature.dao.IReimbDAO;
 import com.revature.dao.IUserDAO;
 import com.revature.dao.ReimbDAO;
 import com.revature.dao.UserDAO;
-import com.revature.model.Reimburse;
+import com.revature.model.Reimbursement;
 import com.revature.model.User;
 
 public class AddTicketServlet extends HttpServlet{
@@ -32,12 +32,13 @@ public class AddTicketServlet extends HttpServlet{
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			PrintWriter out = resp.getWriter();
 			
-			re.setReimbType(req.getParameter("type"));
-			re.setReimbAmount(Double.parseDouble(req.getParameter("amount")));
-			re.setReimbDesc(req.getParameter("description"));
-			re.setReimbAuthor(1);
-			
-			dao.addReimburse(re);
+//			re.setReimbType(req.getParameter("type"));
+//			re.setReimbType();
+//			re.setReimbAmount(Double.parseDouble(req.getParameter("amount")));
+//			re.setReimbDesc(req.getParameter("description"));
+//			re.setReimbAuthor(1);
+//			
+//			dao.addReimburse(re);
 			req.getRequestDispatcher("homepage.html").forward(req, resp);
 			out.print(re);
 		}

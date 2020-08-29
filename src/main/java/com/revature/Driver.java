@@ -3,6 +3,7 @@ package com.revature;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.revature.dao.IUserRoleDAO;
 import com.revature.dao.ReimbDAO;
 import com.revature.dao.ReimbStatusDAO;
 import com.revature.dao.ReimbTypeDAO;
@@ -19,7 +20,7 @@ public class Driver {
 	public static ReimbTypeDAO rtDao = new ReimbTypeDAO();
 	public static ReimbDAO rDao = new ReimbDAO();
 	
-	public static UserRoleDAO urDao = new UserRoleDAO();
+	public static IUserRoleDAO urDao = new UserRoleDAO();
 	public static UserDAO uDao = new UserDAO();
 	
 	public static void main(String[] args) {

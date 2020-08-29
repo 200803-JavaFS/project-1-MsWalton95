@@ -30,7 +30,7 @@ public class UserRoleDAO implements IUserRoleDAO{
 	}
 
 	@Override
-	public boolean add(UserRole ur) {
+	public void add(UserRole ur) {
 		Session ses = ConnectionUtil.getSession();
 		
 		Transaction tx = ses.beginTransaction();
@@ -38,8 +38,6 @@ public class UserRoleDAO implements IUserRoleDAO{
 		ses.save(ur);
 		
 		tx.commit();
-		
-		return true;
 		
 	}
 
