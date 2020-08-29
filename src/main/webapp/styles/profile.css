@@ -1,0 +1,22 @@
+section ul {
+  background-color: #84eacc;
+  padding: 0;
+}
+
+section ul li {
+  padding: 1em 3em;
+}
+
+section ul li a {
+  color: #323737;
+  font-size: 24px;
+  padding: 0;
+  text-align: center;
+  -webkit-transition: all 0.6s;
+  transition: all 0.6s;
+}
+
+section ul li a:hover {
+  background-color: #61d8b5;
+}
+/*# sourceMappingURL=profile.css.map */

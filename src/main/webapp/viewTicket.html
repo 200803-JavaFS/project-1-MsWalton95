@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Ticket</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="w-75 mx-auto">
+    <div class="bg main-content">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 p-0">
+        <a class="navbar-brand p-0" href="home"><img src="img/logo.jpg"  class="mr-2" width="40px" height="40px">Ace Reimbursement System</a>
+        <ul class="navbar-nav">
+          <li><a class="nav-link p-3" href="home">Home </a></li>
+          <li><a class="nav-link p-3" href="add">Add Ticket</a></li>
+          <li><a class="nav-link active p-3" href="view">View Tickets<span class="sr-only">(current)</span></a></li>
+          <li><a class="nav-link p-3" href="logout">Log Out</a></li>
+        </ul>
+      </nav>
+
+      <div id="ticket-history" class="w-100 mx-auto d-flex">
+        
+        <div id="history" class="mx-4">
+          <h2>Reimbursement History</h2>
+          <div id="pending">
+            <h4>Pending</h4>
+            <div class="transaction">
+              <div class="trans">
+                <h5>Ticket #151</h5>
+                <h6>In process...</h6>
+              </div>
+              <h3>150.00</h3>
+            </div>
+          </div>
+
+          <div id="complete">
+            <h4>Completed</h4>
+            <div class="transaction">
+              <div class="trans">
+                <h5>Ticket #150</h5>
+                <h6>Completed</h6>
+              </div>
+              <h3>120.00</h3>
+            </div>
+            <div class="transaction">
+              <div class="trans">
+                <h5>Ticket #149</h5>
+                <h6>Failed</h6>
+              </div>
+              <h3>120.00</h3>
+            </div>
+          </div>
+
+        </div>
+
+        <aside id="ticket-details" class="">
+          <h4>Ticket Details</h4>
+          <ul>
+            <li>
+              <h6>Ticket #</h6> 
+              <h5>151</h5>
+            </li>
+            <li>
+              <h6>Amount</h6>
+              <h5>$150.00</h5>
+            </li>
+            <li>
+              <h6>Submitted</h6>
+              <h5>2020-08-20</h5>
+            </li>
+            <li>
+              <h6>Resolved</h6>
+              <h5>N/A</h5>
+            </li>
+            <li>
+              <h6>Description</h6>
+              <h5>medical supplies</h5>
+            </li>
+            <li>
+              <h6>Author</h6>
+              <h5>Employee name</h5>
+            </li>
+            <li>
+              <h6>Resolver</h6>
+              <h5>N/A</h5>
+            </li>
+            <li>
+              <h6>Type</h6>
+              <h5>Other</h5>
+            </li>
+          </ul>
+        </aside>
+      </div>
+
+
+
+      <!-- <div class="tables w-50 rounded my-5 mx-auto">
+        <h2 class="my-4">Reimbursement History</h2>   
+        <table class="table table-borderless view-table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Submitted</th>
+              <th scope="col">Description</th>
+              <th scope="col">Author</th>
+              <th scope="col">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>$250</td>
+              <td>2020-08-20</td>
+              <td>business trip</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>$250</td>
+              <td>2020-08-20</td>
+              <td>business trip</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>$250</td>
+              <td>2020-08-20</td>
+              <td>business trip</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>$250</td>
+              <td>2020-08-20</td>
+              <td>business trip</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>$250</td>
+              <td>2020-08-20</td>
+              <td>business trip</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+
+
+    </div>
+    <footer class="bg-dark">
+      <p class="text-light text-center p-3 m-0"> @ 2020 Ace Reimbursement System. All Rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

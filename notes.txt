@@ -1,0 +1,37 @@
+--------------------------------------
+--------------Employee----------------	
+--------------------------------------  
+FUNCTION
+--------
+Login 
+View Past Tickets
+Add Reimbursement Request
+View Updated Status - View Pending/Denied/Approved
+
+LAYOUT
+------
+Login => View Past Tickets, Add Reimbursement Request
+
+NEED FIX
+--------
+Need 204, 201 page
+--------------------------------------
+--------------Manager----------------	
+--------------------------------------  
+FUNCTION
+--------  
+Login
+View reimbursement for All Employees
+Add Reimbursement Request
+View Updated Status 
+Approve/Deny Reimbursement - view Company Rules
+
+LAYOUT
+------
+Login => View All Reimbursements For All Employees => Filter requests by status, approved/deny reimbursement
+
+NEED FIX
+--------
+
+Reimbursement Status = Denied, Approved, Pending
+Reimbursement Type = LODGING, TRAVEL, FOOD, or OTHER

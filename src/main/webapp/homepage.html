@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@700&display=swap" rel="stylesheet"> 
+</head>
+<body>
+  <div class="w-75 mx-auto">
+    <div class="bg main-content">
+      <nav class="navbar navbar-expand-lg navbar-light px-4 p-0">
+        <a class="navbar-brand p-0" href="home"><img src="img/logo.jpg"  class="mr-2" width="40px" height="40px">Ace Reimbursement System</a>
+        <ul class="navbar-nav">
+          <li><a class="nav-link active p-3" href="home">Home<span class="sr-only">(current)</span></a></li>
+          <li><a class="nav-link p-3" href="add">Add Ticket</a></li>
+          <li><a class="nav-link p-3" href="view">View Tickets</a></li>
+          <li><a class="nav-link p-3" href="logout">Log Out</a></li>
+        </ul>
+      </nav>
+      <!-- Optional - Add Update Button -->
+      <div id="profile" class="d-flex justify-content-center align-items-center">
+        <div id="profile-pic" class="h-100" >
+          <img src="/img/profile.jpg" class="w-100" style="object-fit:cover">
+          <div id="profile-info" class="text-center py-3">
+            <h3 style="font-size: 3em;"> Jane Doe</h3>
+            <h5> janedoe@email.com</h5>
+            <h5>555-555-1234</h5>
+          </div>
+        </div>
+
+        <div id="profile-extra" class="w-50 h-100 pl-4">
+          
+          <div id="profile-fact" class="p-4 h-50">
+            <h4>Cool Cat Facts</h4>
+            <p id="catfact"></p>
+          </div>
+
+          <div id="profile-update" class="h-50 pt-3 d-flex"> 
+                <div id="profile-clock " class="w-50 mr-3 text-center"> 
+                  <div id="profile-date" class="m-0 pb-2">
+                    <h3 id="date" class="py-4 px-2"></h3>
+                  </div>
+                  <div id="profile-time" class="m-0">
+                    <h3 id="time" class="py-4 m-0"></h3>
+                </div>
+                </div>
+                <div id="profile-weather" class="w-50 d-flex flex-column align-items-center text-light">
+                    <div id="weather">Sunny</div>
+                    <div id="temp">15°c</div>
+                    <div id="hi-low">13°c / 16°c</div>
+                </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- Option - add finanical manager -->
+      <div id="profile-stats" class="mx-auto d-flex flex-column justify-content-center">
+        <h2 class="text-center">Recent Tickets</h2>
+        <!-- <ul class="d-flex mx-auto">
+          <li><a href="#" class="text-dark">Accepted</a></li>
+          <li><a href="#" class="text-dark">Pending</a></li>
+          <li><a href="#" class="text-dark">Denied</a></li>
+        </ul> -->
+        <table id="profile-table" class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Submitted</th>
+            <th scope="col">Description</th>
+            <th scope="col">Author</th>
+            <th scope="col">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>$250</td>
+            <td>2020-08-20</td>
+            <td>business trip</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>$250</td>
+            <td>2020-08-20</td>
+            <td>business trip</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>$250</td>
+            <td>2020-08-20</td>
+            <td>business trip</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+        </table>
+
+    
+    </div>
+      <footer class="bg-dark">
+        <p class="text-light text-center p-3 m-0"> @ 2020 Ace Reimbursement System. All Rights reserved.</p>
+      </footer>
+      <script src="/script/weather.js"></script>
+      <script src="/script/script.js"></script>
+  </div>
+</body>
+</html>
