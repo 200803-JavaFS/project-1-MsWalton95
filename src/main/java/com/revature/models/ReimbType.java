@@ -2,14 +2,7 @@ package com.revature.models;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="ers_reimbursement_type")
@@ -43,7 +36,6 @@ public class ReimbType {
 		this.reimb = reimb;
 	}
 	
-
 	public ReimbType(String type) {
 		super();
 		this.type = type;
@@ -51,7 +43,7 @@ public class ReimbType {
 
 	@Override
 	public String toString() {
-		return "ReimbType [typeID=" + typeID + ", type=" + type + ", reimb=" + reimb + "]";
+		return "ReimbType [typeID=" + typeID + ", type=" + type + "]";
 	}
 
 	public int getTypeID() {

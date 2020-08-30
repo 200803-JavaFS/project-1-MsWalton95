@@ -2,6 +2,7 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -9,43 +10,82 @@ import org.hibernate.query.Query;
 import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
-public class UserRoleDAO {
+public class UserRoleDAO implements IUserRoleDAO{
+	
 	public UserRoleDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void insert(UserRole chara) {
+	public boolean insert(UserRole ur) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		Transaction tx = ses.beginTransaction();
+		try {
+			tx = ses.beginTransaction();
+			
+			ses.save(ur);
+			tx.commit();
+			
+			return true;
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
 		
-		ses.save(chara);
-		
-		tx.commit();
-	}
-	
-	public void update(UserRole chara) {
-		Session ses = HibernateUtil.getSession();
-		
-		ses.merge(chara);
+		return false;
 	}
 	
 	public UserRole selectbyId(int id) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		UserRole chara = ses.get(UserRole.class, id);
+		try {
+			tx = ses.beginTransaction();
+			
+			UserRole ur = ses.get(UserRole.class, id);
+			
+			if(ur == null) {
+				System.out.println(" There are no reimbursement type by that id");
+				return null;
+			}else{
+				tx.commit();
+				return ur;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
 		
-		return chara;
+		return null;
 	}
 	
 	public List<UserRole> selectAll(){
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		String hql = "FROM ERS_USER_ROLES";
-		List<UserRole> list = ses.createQuery(hql).list();
-		//List results = query.list();
-		//List<UserRole> charList = ses.createQuery("FROM ers_user_roles").list();
-
-		return list;
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.UserRole";
+		
+			@SuppressWarnings("unchecked")
+			Query<UserRole> query = ses.createQuery(hql);
+			List<UserRole> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println(" There are no user roles");
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

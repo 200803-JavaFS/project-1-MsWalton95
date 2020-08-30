@@ -2,49 +2,222 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.revature.models.Reimb;
-import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 
-public class ReimbDAO {
+public class ReimbDAO implements IReimbDAO{
 	
 	public ReimbDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void insert(Reimb re) {
+	public boolean insert(Reimb re) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = ses.beginTransaction();
+			
+			ses.save(re);
+			tx.commit();
+			
+			return true;
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
 		
-		Transaction tx = ses.beginTransaction();
-		
-		ses.save(re);
-		
-		tx.commit();
+		return false;
 	}
 	
-	public void update(Reimb re) {
+	public boolean update(Reimb re) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		ses.merge(re);
+		try {
+			tx = ses.beginTransaction();
+	
+			ses.merge(re);		
+			tx.commit();
+			
+			return true;
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return false;
+		
 	}
 	
 	public Reimb selectbyId(int id) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		Reimb re = ses.get(Reimb.class, id);
+		try {
+			tx = ses.beginTransaction();
+			
+			Reimb re = ses.get(Reimb.class, id);
+			
+			if(re == null) {
+				System.out.println(" There are no reimbursement by that id");
+				return null;
+			}else{
+				tx.commit();
+				return re;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
 		
-		return re;
+		return null;
 	}
-	
 	
 	public List<Reimb> selectAll(){
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		List<Reimb> re = ses.createQuery("user_role FROM ers_reimbrsement").list();
-
-		return re;
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.Reimb";
+		
+			@SuppressWarnings("unchecked")
+			Query<Reimb> query = ses.createQuery(hql);
+			List<Reimb> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println(" There are no reimbursements");
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public List<Reimb> selectByStatus(int id){
+		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.Reimb WHERE status.statusID=:s";
+			
+			@SuppressWarnings("unchecked")
+			Query<Reimb> query = ses.createQuery(hql);
+			query.setParameter("s", id);
+			List<Reimb> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println("There is no status under that id: " + id);
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public List<Reimb> selectByType(int id){
+		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.Reimb WHERE type.typeID=:t";
+			
+			@SuppressWarnings("unchecked")
+			Query<Reimb> query = ses.createQuery(hql);
+			query.setParameter("t", id);
+			List<Reimb> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println("There is no type under that id: " + id );
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public List<Reimb> selectByAuthor(int id){
+		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.Reimb WHERE author.userID=:a";
+			
+			@SuppressWarnings("unchecked")
+			Query<Reimb> query = ses.createQuery(hql);
+			query.setParameter("a", id);
+			List<Reimb> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println("There is no reimbursement under that id: " + id );
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public List<Reimb> selectByResolver(int id){
+		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.Reimb WHERE resolver.userID=:r";
+			
+			@SuppressWarnings("unchecked")
+			Query<Reimb> query = ses.createQuery(hql);
+			query.setParameter("r", id);
+			List<Reimb> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println("There is no reimbursement under that id: " + id );
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}catch(NullPointerException e) {System.out.println(e);}
+		
+		return null;
 	}
 }

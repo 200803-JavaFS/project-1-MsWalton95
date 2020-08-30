@@ -70,6 +70,18 @@ public class User {
 		this.author = author;
 	}
 
+	public User(int userID, String username, String password, String firstName, String lastName, String email,
+			UserRole user) {
+		super();
+		this.userID = userID;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.user = user;
+	}
+
 	public User(String username, String password, String firstName, String lastName, String email, UserRole user) {
 		super();
 		this.username = username;
@@ -150,11 +162,11 @@ public class User {
 		this.resolver = resolver;
 	}
 
-	public List<Reimb> getauthor() {
+	public List<Reimb> getAuthor() {
 		return author;
 	}
 
-	public void setauthor(List<Reimb> author) {
+	public void setAuthor(List<Reimb> author) {
 		this.author = author;
 	}
 

@@ -34,7 +34,7 @@ public class Reimb {
 	private String description;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="reimb_author", nullable=false)
+	@JoinColumn(name="reimb_author")
 	private User author;
 
 	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
@@ -81,13 +81,32 @@ public class Reimb {
 		this.status = status;
 		this.type = type;
 	}
+	
+	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status,
+			ReimbType type) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+		this.status = status;
+		this.type = type;
+	}
+
+
+	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Reimb [reimbID=" + reimbID + ", amount=" + amount + ", submitted=" + submitted + ", resolved="
-				+ resolved + ", description=" + description + ", author=" + author + ", resolver=" + resolver
-				+ ", status=" + status + ", type=" + type + "]";
+				+ resolved + ", description=" + description + "]";
 	}
 
 

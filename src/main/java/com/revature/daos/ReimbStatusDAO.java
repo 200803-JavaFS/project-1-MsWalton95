@@ -2,43 +2,89 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.revature.models.ReimbStatus;
 import com.revature.util.HibernateUtil;
 
-public class ReimbStatusDAO {
-	public void insert(ReimbStatus re) {
-		Session ses = HibernateUtil.getSession();
-		
-		Transaction tx = ses.beginTransaction();
-		
-		ses.save(re);
-		
-		tx.commit();
-	}
+public class ReimbStatusDAO implements IReimbStatusDAO{
 	
-	public void update(ReimbStatus re) {
+	public ReimbStatusDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public boolean insert(ReimbStatus re) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		ses.merge(re);
+		try {
+			tx = ses.beginTransaction();
+			
+			ses.save(re);
+			tx.commit();
+			
+			return true;
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 	
 	public ReimbStatus selectbyId(int id) {
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
 		
-		ReimbStatus re = ses.get(ReimbStatus.class, id);
+		try {
+			tx = ses.beginTransaction();
+			
+			ReimbStatus re = ses.get(ReimbStatus.class, id);
+			
+			if(re == null) {
+				System.out.println(" There are no reimbursement status by that id");
+				return null;
+			}else{
+				tx.commit();
+				return re;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
 		
-		return re;
+		return null;
 	}
 	
-
 	public List<ReimbStatus> selectAll(){
 		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		try {
+			tx = ses.beginTransaction();
+			String hql = "FROM com.revature.models.ReimbStatus";
 		
-		List<ReimbStatus> re = ses.createQuery("user_role FROM ers_users").list();
-
-		return re;
+			@SuppressWarnings("unchecked")
+			Query<ReimbStatus> query = ses.createQuery(hql);
+			List<ReimbStatus> results = query.list();
+			
+			if(results.isEmpty()) {
+				System.out.println(" There are no reimbursement status");
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

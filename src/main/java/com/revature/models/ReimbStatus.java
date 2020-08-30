@@ -2,14 +2,7 @@ package com.revature.models;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="ers_reimbursement_status")
@@ -43,7 +36,6 @@ public class ReimbStatus {
 		this.reimb = reimb;
 	}
 
-	
 	public ReimbStatus(String status) {
 		super();
 		this.status = status;
@@ -51,7 +43,7 @@ public class ReimbStatus {
 
 	@Override
 	public String toString() {
-		return "ReimbStatus [statusID=" + statusID + ", status=" + status + ", reimb=" + reimb + "]";
+		return "ReimbStatus [statusID=" + statusID + ", status=" + status + "]";
 	}
 
 	public int getStatusID() {

@@ -3,6 +3,7 @@ package com.revature.models;
 import java.util.List;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name="ers_user_roles")
 public class UserRole {
@@ -12,7 +13,7 @@ public class UserRole {
 	@Column(name="ers_user_role_id")
 	private int roleID;
 	
-	@Column(name="user_role", length=20, nullable=false)
+	@Column(name="user_role", nullable=false, length=20)
 	private String userRole;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
@@ -34,7 +35,6 @@ public class UserRole {
 		this.userRole = userRole;
 		this.users = users;
 	}
-
 	
 	public UserRole(String userRole) {
 		super();
@@ -103,5 +103,6 @@ public class UserRole {
 			return false;
 		return true;
 	}
+
 	
 }
