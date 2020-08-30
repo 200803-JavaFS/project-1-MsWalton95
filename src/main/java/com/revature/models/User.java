@@ -28,14 +28,14 @@ public class User {
 	@Column(name="user_email", nullable=false, unique=true ,length=150)
 	private String email;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_role_id", nullable=false)
 	private UserRole user;
 	
-	@OneToMany(mappedBy="resolver", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="resolver", fetch=FetchType.EAGER)
 	private List<Reimb> resolver;
 	
-	@OneToMany(mappedBy="author", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
 	private List<Reimb> author;
 
 	public User() {

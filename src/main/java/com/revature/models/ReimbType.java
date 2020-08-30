@@ -16,7 +16,7 @@ public class ReimbType {
 	@Column(name="reimb_type", nullable=false, length=10)
 	private String type;
 	
-	@OneToMany(mappedBy="type", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="type", fetch=FetchType.EAGER)
 	private List<Reimb> reimb;
 
 	public ReimbType() {

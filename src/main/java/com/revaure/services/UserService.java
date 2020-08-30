@@ -26,7 +26,15 @@ public class UserService {
 		return uDao.selectAll();
 	}
 	
+	public List<User> selectByRole(int id){
+		return uDao.selectByRole(id);
+	}
+	
 	public List<User> selectByName(String fname,String lname){
 		return uDao.selectByName(fname, lname);
+	}
+	
+	public List<User> userLogin(String username, String password){
+		return uDao.userLogin(username, password);
 	}
 }

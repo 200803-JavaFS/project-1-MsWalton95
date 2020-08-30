@@ -6,7 +6,7 @@ import com.revature.daos.IReimbStatusDAO;
 import com.revature.daos.ReimbStatusDAO;
 import com.revature.models.ReimbStatus;
 
-public class ReimbStatusSevice {
+public class ReimbStatusService {
 	
 	public static IReimbStatusDAO rsDao = new ReimbStatusDAO();
 	

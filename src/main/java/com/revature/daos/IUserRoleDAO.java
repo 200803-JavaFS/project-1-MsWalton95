@@ -8,6 +8,8 @@ public interface IUserRoleDAO {
 	
 	public boolean insert(UserRole ur);
 	
+	public boolean update(UserRole ur);
+	
 	public UserRole selectbyId(int id);
 	
 	public List<UserRole> selectAll();

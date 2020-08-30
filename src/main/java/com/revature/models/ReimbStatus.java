@@ -16,7 +16,7 @@ public class ReimbStatus {
 	@Column(name="reimb_status", nullable=false, length=10)
 	private String status;
 	
-	@OneToMany(mappedBy="status", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="status", fetch=FetchType.EAGER)
 	private List<Reimb> reimb;
 
 	public ReimbStatus() {

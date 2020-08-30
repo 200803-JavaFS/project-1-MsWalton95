@@ -7,12 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.revature.models.User;
 import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
 public class UserRoleDAO implements IUserRoleDAO{
-	
-	public UserRoleDAO() {
+		public UserRoleDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,6 +24,26 @@ public class UserRoleDAO implements IUserRoleDAO{
 			tx = ses.beginTransaction();
 			
 			ses.save(ur);
+			tx.commit();
+			
+			return true;
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean update(UserRole ur) {
+		Session ses = HibernateUtil.getSession();
+		Transaction tx = null;
+		
+		try {
+			tx = ses.beginTransaction();
+	
+			ses.merge(ur);		
 			tx.commit();
 			
 			return true;

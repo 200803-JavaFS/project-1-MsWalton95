@@ -14,5 +14,9 @@ public interface IUserDAO {
 	
 	public List<User> selectAll();
 	
+	public List<User> selectByRole(int id);
+	
 	public List<User> selectByName(String fname,String lname);
+	
+	public List<User> userLogin(String username,String password);
 }
