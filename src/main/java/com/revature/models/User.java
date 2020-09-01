@@ -70,8 +70,8 @@ public class User {
 		this.author = author;
 	}
 
-	public User(int userID, String username, String password, String firstName, String lastName, String email,
-			UserRole user) {
+	//Update
+	public User(int userID, String username, String password, String firstName, String lastName, String email) {
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -79,17 +79,16 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.user = user;
 	}
 
-	public User(String username, String password, String firstName, String lastName, String email, UserRole user) {
+	//Insert
+	public User(String username, String password, String firstName, String lastName, String email) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.user = user;
 	}
 
 	@Override

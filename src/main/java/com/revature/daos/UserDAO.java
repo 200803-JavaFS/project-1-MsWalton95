@@ -3,11 +3,13 @@ package com.revature.daos;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.revature.models.User;
+import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
 public class UserDAO implements IUserDAO{
@@ -16,12 +18,15 @@ public class UserDAO implements IUserDAO{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean insert(User u) {
+	public boolean insert(User u, int id) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
+			
+			UserRole ur = ses.get(UserRole.class, id);
+			u.setUser(ur);
 			
 			ses.save(u);
 			tx.commit();
@@ -36,13 +41,16 @@ public class UserDAO implements IUserDAO{
 		return false;
 	}
 	
-	public boolean update(User u) {
+	public boolean update(User u, int id) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
 	
+			UserRole ur = ses.get(UserRole.class, id);
+			u.setUser(ur);
+			
 			ses.merge(u);		
 			tx.commit();
 			
@@ -87,7 +95,7 @@ public class UserDAO implements IUserDAO{
 		Transaction tx = null;
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.User";
+			String hql = "FROM User";
 		
 			@SuppressWarnings("unchecked")
 			Query<User> query = ses.createQuery(hql);
@@ -114,7 +122,7 @@ public class UserDAO implements IUserDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.User WHERE firstName=:f AND lastName=:l";
+			String hql = "FROM User WHERE firstName=:f AND lastName=:l";
 			
 			@SuppressWarnings("unchecked")
 			Query<User> query = ses.createQuery(hql);
@@ -143,7 +151,7 @@ public class UserDAO implements IUserDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.User WHERE user.roleID=:r";
+			String hql = "FROM User WHERE user.roleID=:r";
 			
 			@SuppressWarnings("unchecked")
 			Query<User> query = ses.createQuery(hql);
@@ -165,26 +173,26 @@ public class UserDAO implements IUserDAO{
 		return null;
 	}
 
-	public List<User> userLogin(String username,String password) {	
+	public boolean userLogin(User u) {	
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.User WHERE username=:u AND password=:p";
+			String hql = "FROM User WHERE username=:u AND password=:p";
 			
 			@SuppressWarnings("unchecked")
 			Query<User> query = ses.createQuery(hql);
-			query.setParameter("u", username);
-			query.setParameter("p",password);
+			query.setParameter("u", u.getUsername());
+			query.setParameter("p",u.getPassword());
 			List<User> results = query.list();
 	
 			if(results.isEmpty()) {
 				System.out.println("Username or password incorrect");
-				return null;
+				return false;
 			}else {
-				tx.commit();System.out.println(results);
-				return results;
+				tx.commit();
+				return true;
 				
 			}
 		}catch(HibernateException e) {
@@ -192,7 +200,7 @@ public class UserDAO implements IUserDAO{
 			e.printStackTrace();
 		}
 		
-		return null;
+		return false;
 	}
 	
 }

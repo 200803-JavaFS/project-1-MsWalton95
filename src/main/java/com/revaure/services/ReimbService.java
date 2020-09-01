@@ -9,12 +9,12 @@ import com.revature.models.Reimb;
 public class ReimbService {
 	public static IReimbDAO reDao = new ReimbDAO();
 	
-	public boolean insert(Reimb re) { 
-		return reDao.insert(re);
+	public boolean insert(Reimb re, int type, int status, int author) { 
+		return reDao.insert(re, type, status, author);
 	}
 	
-	public boolean update(Reimb re) {
-		return reDao.update(re);
+	public boolean update(Reimb re, int type, int status, int author, int resolver) {
+		return reDao.update(re, type, status, author, resolver);
 	}
 	
 	public Reimb selectbyId(int id) {

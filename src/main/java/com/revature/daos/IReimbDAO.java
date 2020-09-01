@@ -6,9 +6,9 @@ import com.revature.models.Reimb;
 
 public interface IReimbDAO {
 
-	public boolean insert(Reimb re);
+	public boolean insert(Reimb re, int type, int status, int author);
 	
-	public boolean update(Reimb re);
+	public boolean update(Reimb re, int type, int status, int author, int resolver);
 	
 	public Reimb selectbyId(int id);
 	

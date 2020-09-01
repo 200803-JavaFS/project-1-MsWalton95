@@ -10,12 +10,12 @@ public class UserService {
 	
 	public static IUserDAO uDao = new UserDAO(); 
 
-	public boolean insert(User u) {
-		return uDao.insert(u);
+	public boolean insert(User u, int id) {
+		return uDao.insert(u, id);
 	}
 	
-	public boolean update(User u) {
-		return uDao.update(u);
+	public boolean update(User u, int id) {
+		return uDao.update(u, id);
 	}
 	
 	public User selectbyId(int id) {
@@ -34,7 +34,7 @@ public class UserService {
 		return uDao.selectByName(fname, lname);
 	}
 	
-	public List<User> userLogin(String username, String password){
-		return uDao.userLogin(username, password);
+	public boolean userLogin(User u){
+		return uDao.userLogin(u);
 	}
 }

@@ -3,12 +3,13 @@ package com.revature.daos;
 import java.util.List;
 
 import com.revature.models.User;
+import com.revature.models.UserRole;
 
 public interface IUserDAO {
 
-	public boolean insert(User u);
+	public boolean insert(User u, int id);
 	
-	public boolean update(User u);
+	public boolean update(User u, int id);
 	
 	public User selectbyId(int id);
 	
@@ -18,5 +19,5 @@ public interface IUserDAO {
 	
 	public List<User> selectByName(String fname,String lname);
 	
-	public List<User> userLogin(String username,String password);
+	public boolean userLogin(User u);
 }

@@ -1,0 +1,8 @@
+JavaScript
+
+View Reimburse
+    - When clicked transaction - show details in "ticket details"
+    - scroll in the transaction history
+
+Add Reimburse   
+    - Description show when length is maxlength

@@ -34,7 +34,7 @@ public class Reimb {
 	private String description;
 	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="reimb_author")
+	@JoinColumn(name="reimb_author", nullable=false)
 	private User author;
 
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
@@ -82,23 +82,21 @@ public class Reimb {
 		this.type = type;
 	}
 	
-	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status,
-			ReimbType type) {
+	//Update
+		public Reimb(int reimbID, double amount, Timestamp submitted, Timestamp resolved, String description) {
+			super();
+			this.reimbID = reimbID;
+			this.amount = amount;
+			this.submitted = submitted;
+			this.description = description;
+			this.resolved = resolved;
+		}
+	
+	//Insert
+	public Reimb(double amount, Timestamp submitted, String description) {
 		super();
 		this.amount = amount;
 		this.submitted = submitted;
-		this.resolved = resolved;
-		this.description = description;
-		this.status = status;
-		this.type = type;
-	}
-
-
-	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description) {
-		super();
-		this.amount = amount;
-		this.submitted = submitted;
-		this.resolved = resolved;
 		this.description = description;
 	}
 
