@@ -1,56 +1,74 @@
 package com.revature.daos;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.revature.models.User;
+import com.revature.daoimpl.IUserDAO;
+import com.revature.models.ReimbStatus;
+import com.revature.models.Users;
 import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
 public class UserDAO implements IUserDAO{
 
-	public UserDAO() {
-		// TODO Auto-generated constructor stub
+	@Override
+	public List<Users> selectAll() {
+		Session ses = HibernateUtil.getSession();
+
+		List<Users> list = ses.createQuery("FROM Users").list();
+
+		if(list.isEmpty()) {
+			return null;
+		}else {
+		return list;
+		}
 	}
-	
-	public boolean insert(User u, int id) {
+
+	@Override
+	public Users selectbyId(int id) {
+		Session ses = HibernateUtil.getSession();
+
+		Users u = ses.get(Users.class, id);
+		
+		if(u == null) {
+			return null;
+		}else{
+			return u;
+		}
+	}
+
+	@Override
+	public boolean insert(Users u) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
-		
+
 		try {
 			tx = ses.beginTransaction();
-			
-			UserRole ur = ses.get(UserRole.class, id);
-			u.setUser(ur);
 			
 			ses.save(u);
 			tx.commit();
-			
 			return true;
-			
-		}catch(HibernateException e) {
+		} catch (Exception e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace();
+			return false;
 		}
-		
-		return false;
 	}
-	
-	public boolean update(User u, int id) {
+
+
+	@Override
+	public boolean update(Users u) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
-	
-			UserRole ur = ses.get(UserRole.class, id);
-			u.setUser(ur);
-			
+
 			ses.merge(u);		
 			tx.commit();
 			
@@ -63,46 +81,23 @@ public class UserDAO implements IUserDAO{
 		
 		return false;
 	}
-	
-	public User selectbyId(int id) {
+
+	public List<Users> selectByName(String fName, String lName){
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
+			String hql = "FROM Users WHERE firstName=:f AND lastName=:l";
 			
-			User u = ses.get(User.class, id);
-			
-			if(u ==  null) {
-				System.out.println(" There are no users by that id: " + id);
-				return null;
-			}else{
-				tx.commit();
-				return u;
-			}
-			
-		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
-	
-	public List<User> selectAll(){
-		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
-		try {
-			tx = ses.beginTransaction();
-			String hql = "FROM User";
-		
 			@SuppressWarnings("unchecked")
-			Query<User> query = ses.createQuery(hql);
-			List<User> results = query.list();
+			Query<Users> query = ses.createQuery(hql);
+			query.setParameter("f",fName);
+			query.setParameter("l",lName);
+			List<Users> results = query.list();
 			
 			if(results.isEmpty()) {
-				System.out.println("There are no users");
+				System.out.println(fName + " " + lName + " is not in this file");
 				return null;
 			}else{
 				tx.commit();
@@ -116,47 +111,18 @@ public class UserDAO implements IUserDAO{
 		return null;
 	}
 	
-	public List<User> selectByName(String fname,String lname){
+	public List<Users> selectByRole(int id){
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM User WHERE firstName=:f AND lastName=:l";
+			String hql = "FROM Users WHERE user.roleID=:r";
 			
 			@SuppressWarnings("unchecked")
-			Query<User> query = ses.createQuery(hql);
-			query.setParameter("f",fname);
-			query.setParameter("l",lname);
-			List<User> results = query.list();
-			
-			if(results.isEmpty()) {
-				System.out.println(fname + " " + lname + " is not in this file");
-				return null;
-			}else{
-				tx.commit();
-				return results;
-			}
-		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
-	public List<User> selectByRole(int id){
-		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
-		
-		try {
-			tx = ses.beginTransaction();
-			String hql = "FROM User WHERE user.roleID=:r";
-			
-			@SuppressWarnings("unchecked")
-			Query<User> query = ses.createQuery(hql);
+			Query<Users> query = ses.createQuery(hql);
 			query.setParameter("r",id);
-			List<User> results = query.list();
+			List<Users> results = query.list();
 			
 			if(results.isEmpty()) {
 				System.out.println( "There is no employees under this role id: " + id);
@@ -172,20 +138,22 @@ public class UserDAO implements IUserDAO{
 		
 		return null;
 	}
-
-	public boolean userLogin(User u) {	
+	
+	public boolean userLogin(String username, String password) {	
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM User WHERE username=:u AND password=:p";
-			
+			String hql = "FROM Users WHERE username=:u AND password=:p";
+
 			@SuppressWarnings("unchecked")
-			Query<User> query = ses.createQuery(hql);
-			query.setParameter("u", u.getUsername());
-			query.setParameter("p",u.getPassword());
-			List<User> results = query.list();
+			Query<Users> query = ses.createQuery(hql);
+			
+			query.setParameter("u", username);
+			query.setParameter("p", password);
+			
+			List<Users> results = query.list();
 	
 			if(results.isEmpty()) {
 				System.out.println("Username or password incorrect");
@@ -195,6 +163,7 @@ public class UserDAO implements IUserDAO{
 				return true;
 				
 			}
+
 		}catch(HibernateException e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace();
@@ -202,5 +171,6 @@ public class UserDAO implements IUserDAO{
 		
 		return false;
 	}
-	
+
+
 }

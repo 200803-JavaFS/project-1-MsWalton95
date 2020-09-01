@@ -1,8 +1,9 @@
-package com.revature;
-
+package com.revature.tests;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimb;
 import com.revature.models.ReimbStatus;
 import com.revature.models.ReimbType;
@@ -14,18 +15,24 @@ import com.revature.services.ReimbTypeService;
 import com.revature.services.UserRoleService;
 import com.revature.services.UserService;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
-public class Driver {
+import org.junit.Test;
+
+public class ServiceTest {
+	ReimbStatusService status = new ReimbStatusService();
+	ReimbTypeService type = new ReimbTypeService();
+	ReimbService reimb = new ReimbService();
 	
-	public static void main(String[] args) throws Exception {
-
-		ReimbStatusService status = new ReimbStatusService();
-		ReimbTypeService type = new ReimbTypeService();
-		ReimbService reimb = new ReimbService();
-		
-		UserRoleService role = new UserRoleService();
-		UserService user = new UserService();
-		
+	UserRoleService role = new UserRoleService();
+	UserService user = new UserService();
+	
+    @Test
+    public void insert1() {
     	UserRole ur1 = new UserRole("Employee");
     	UserRole ur2 = new UserRole("Financial Manager");
     	
@@ -41,7 +48,10 @@ public class Driver {
         role.insert(ur1); role.insert(ur2);
         type.insert(rt1);type.insert(rt2);type.insert(rt3);type.insert(rt4);
         status.insert(rs1);status.insert(rs2);status.insert(rs3);	
-
+    }
+	
+	@Test
+	public void insert2() {
 		UserRole role1 = role.selectbyId(1);
 		UserRole role2 = role.selectbyId(2);
 
@@ -54,9 +64,9 @@ public class Driver {
 	
 		user.insert(u1);user.insert(u2); user.insert(u3);
 		user.insert(u4);user.insert(u5); user.insert(u6);
+	}
 	
-	
-
+	public void insert3() {
 		ReimbStatus status1 = status.selectbyId(1);
 		ReimbStatus status2 = status.selectbyId(2);
 		ReimbStatus status3 = status.selectbyId(3);
@@ -83,9 +93,47 @@ public class Driver {
 		Reimb r5 = new Reimb(22.00, current, "This is a description5", status1, type1, author1);
 		
 		reimb.insert(r1);reimb.insert(r2);reimb.insert(r3);reimb.insert(r4);reimb.insert(r5);
+	}
+	
+	@Test
+	public void json() throws Exception{
+	List<UserRole> roles = role.selectAll();
+	for(UserRole ur : roles) {ObjectMapper om = new ObjectMapper();
+	System.out.println(om.writeValueAsString(ur));}		
+
+	List<ReimbType> types = type.selectAll();
+	for(ReimbType rt : types) {ObjectMapper om = new ObjectMapper();
+	System.out.println(om.writeValueAsString(rt));}		
+
+	List<ReimbStatus> statuses = status.selectAll();
+	for(ReimbStatus rs : statuses) {ObjectMapper om = new ObjectMapper();
+	System.out.println(om.writeValueAsString(rs));}
+
+	
+	List<Users> users = user.selectAll();
+	for(Users u : users) {ObjectMapper om = new ObjectMapper();
+	System.out.println(om.writeValueAsString(u));}
+	
+	List<Reimb> reimbs = reimb.selectAll();
+	for(Reimb r : reimbs) {ObjectMapper om = new ObjectMapper();
+	System.out.println(om.writeValueAsString(r));}
+	
 
 	}
+	
+	  
+	@Test
+	public void select() {
+		List<Users> us1 = user.selectByName("Maya","Fey");
+	}
 
+	
+	@Test
+	public void login() {
+		boolean us2 = user.userLogin("emp5", "emp5");
+		assertTrue(us2);
 		
-
+		boolean us1 = user.userLogin("emp55", "emp5");
+		assertFalse(us1);
+	}
 }

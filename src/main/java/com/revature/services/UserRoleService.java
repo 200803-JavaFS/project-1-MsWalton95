@@ -1,14 +1,13 @@
-package com.revaure.services;
+package com.revature.services;
 
 import java.util.List;
 
-import com.revature.daos.IUserRoleDAO;
+import com.revature.daoimpl.IUserRoleDAO;
 import com.revature.daos.UserRoleDAO;
 import com.revature.models.UserRole;
 
 public class UserRoleService {
-
-	private static IUserRoleDAO urDao = new UserRoleDAO();
+private static IUserRoleDAO urDao = new UserRoleDAO();
 	
 	public boolean insert(UserRole ur) {
 		return urDao.insert(ur);

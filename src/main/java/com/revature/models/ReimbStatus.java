@@ -1,39 +1,37 @@
 package com.revature.models;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="ers_reimbursement_status")
-public class ReimbStatus {
+public class ReimbStatus implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="reimb_status_id", nullable=false)
 	private int statusID;
-	
-	@Column(name="reimb_status", nullable=false, length=10)
+	@Column(nullable=false, length=10)
 	private String status;
+	@OneToMany(mappedBy="status")
+    private Set<Reimb> reimbs;
 	
-	@OneToMany(mappedBy="status", fetch=FetchType.EAGER)
-	private List<Reimb> reimb;
-
 	public ReimbStatus() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReimbStatus(int statusID, String status, List<Reimb> reimb) {
+	public ReimbStatus(int statusID, String status, Set<Reimb> reimbs) {
 		super();
 		this.statusID = statusID;
 		this.status = status;
-		this.reimb = reimb;
+		this.reimbs = reimbs;
 	}
 
-	public ReimbStatus(String status, List<Reimb> reimb) {
+	public ReimbStatus(int statusID, String status) {
 		super();
+		this.statusID = statusID;
 		this.status = status;
-		this.reimb = reimb;
 	}
 
 	public ReimbStatus(String status) {
@@ -62,19 +60,10 @@ public class ReimbStatus {
 		this.status = status;
 	}
 
-	public List<Reimb> getReimb() {
-		return reimb;
-	}
-
-	public void setReimb(List<Reimb> reimb) {
-		this.reimb = reimb;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((reimb == null) ? 0 : reimb.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + statusID;
 		return result;
@@ -89,11 +78,6 @@ public class ReimbStatus {
 		if (getClass() != obj.getClass())
 			return false;
 		ReimbStatus other = (ReimbStatus) obj;
-		if (reimb == null) {
-			if (other.reimb != null)
-				return false;
-		} else if (!reimb.equals(other.reimb))
-			return false;
 		if (status == null) {
 			if (other.status != null)
 				return false;
@@ -104,5 +88,4 @@ public class ReimbStatus {
 		return true;
 	}
 
-	
 }

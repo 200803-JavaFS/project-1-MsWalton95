@@ -11,19 +11,15 @@
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		<!-- Additional Hibernate Properties -->
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		<property name="hibernate.default_schema">hibernate</property>
 		<!-- This will print the sql queries hibernate makes to the console -->
 		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.format_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
-		
+		<property name="hibernate.hbm2ddl.auto">update</property>		
 		<!-- Mappings -->
 		<mapping class="com.revature.models.UserRole"/>
-		<mapping class="com.revature.models.User"/>
+		<mapping class="com.revature.models.Users"/>
 		<mapping class="com.revature.models.ReimbType"/>
 		<mapping class="com.revature.models.ReimbStatus"/>
 		<mapping class="com.revature.models.Reimb"/>
-		
 	</session-factory>
-
 </hibernate-configuration>

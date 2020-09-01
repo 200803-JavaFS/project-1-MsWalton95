@@ -1,4 +1,4 @@
-package com.revature.daos;
+package com.revature.daoimpl;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import com.revature.models.Reimb;
 
 public interface IReimbDAO {
 
-	public boolean insert(Reimb re, int type, int status, int author);
+	public boolean insert(Reimb re);
 	
-	public boolean update(Reimb re, int type, int status, int author, int resolver);
+	public boolean update(Reimb re);
 	
 	public Reimb selectbyId(int id);
 	

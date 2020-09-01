@@ -7,10 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.revature.daoimpl.IReimbDAO;
 import com.revature.models.Reimb;
 import com.revature.models.ReimbStatus;
 import com.revature.models.ReimbType;
-import com.revature.models.User;
+import com.revature.models.Users;
 import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
@@ -20,20 +21,12 @@ public class ReimbDAO implements IReimbDAO{
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean insert(Reimb re, int type, int status, int author) {
+	public boolean insert(Reimb re) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		try {
 			tx = ses.beginTransaction();
-			
-			User au = ses.get(User.class, author);
-			ReimbType rt = ses.get(ReimbType.class, type);
-			ReimbStatus rs = ses.get(ReimbStatus.class, status);
-			
-			re.setAuthor(au);
-			re.setStatus(rs);
-			re.setType(rt);
-			
+
 			ses.save(re);
 			tx.commit();
 			
@@ -47,23 +40,13 @@ public class ReimbDAO implements IReimbDAO{
 		return false;
 	}
 	
-	public boolean update(Reimb re, int resolver, int type, int status, int author) {
+	public boolean update(Reimb re) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
-	
-			User au = ses.get(User.class, author);
-			User res = ses.get(User.class, resolver);
-			ReimbType rt = ses.get(ReimbType.class, type);
-			ReimbStatus rs = ses.get(ReimbStatus.class, status);
-			
-			re.setAuthor(au);
-			re.setResolver(res);
-			re.setStatus(rs);
-			re.setType(rt);
-			
+
 			ses.merge(re);		
 			tx.commit();
 			
@@ -109,7 +92,7 @@ public class ReimbDAO implements IReimbDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.Reimb";
+			String hql = "FROM Reimb";
 		
 			@SuppressWarnings("unchecked")
 			Query<Reimb> query = ses.createQuery(hql);
@@ -137,7 +120,7 @@ public class ReimbDAO implements IReimbDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.Reimb WHERE status.statusID=:s";
+			String hql = "FROM Reimb WHERE status.statusID=:s";
 			
 			@SuppressWarnings("unchecked")
 			Query<Reimb> query = ses.createQuery(hql);
@@ -165,7 +148,7 @@ public class ReimbDAO implements IReimbDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.Reimb WHERE type.typeID=:t";
+			String hql = "FROM Reimb WHERE type.typeID=:t";
 			
 			@SuppressWarnings("unchecked")
 			Query<Reimb> query = ses.createQuery(hql);
@@ -193,7 +176,7 @@ public class ReimbDAO implements IReimbDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.Reimb WHERE author.userID=:a";
+			String hql = "FROM Reimb WHERE author.userID=:a";
 			
 			@SuppressWarnings("unchecked")
 			Query<Reimb> query = ses.createQuery(hql);
@@ -221,7 +204,7 @@ public class ReimbDAO implements IReimbDAO{
 		
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.Reimb WHERE resolver.userID=:r";
+			String hql = "FROM Reimb WHERE resolver.userID=:r";
 			
 			@SuppressWarnings("unchecked")
 			Query<Reimb> query = ses.createQuery(hql);

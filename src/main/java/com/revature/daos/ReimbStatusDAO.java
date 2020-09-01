@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.revature.daoimpl.IReimbStatusDAO;
 import com.revature.models.ReimbStatus;
 import com.revature.util.HibernateUtil;
 
@@ -66,7 +67,7 @@ public class ReimbStatusDAO implements IReimbStatusDAO{
 		Transaction tx = null;
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.ReimbStatus";
+			String hql = "FROM ReimbStatus";
 		
 			@SuppressWarnings("unchecked")
 			Query<ReimbStatus> query = ses.createQuery(hql);

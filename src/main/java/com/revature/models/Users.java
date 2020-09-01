@@ -1,49 +1,48 @@
 package com.revature.models;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="ers_users")
-public class User {
+public class Users implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ers_users_id", nullable=false)
+	@Column(nullable=false)
 	private int userID;
-
-	@Column(name="ers_username",nullable=false, unique=true, length=50)
+	@Column(nullable=false, unique=true, length=50)
 	private String username;
-	//
-	@Column(name="ers_password", nullable=false, length=50)
+	@Column(nullable=false, length=50)
 	private String password;
-	//
-	@Column(name="user_first_name", nullable=false, length=100)
+	@Column(nullable=false, length=100)
 	private String firstName;
-	//
-	@Column(name="user_last_name", nullable=false, length=100)
+	@Column(nullable=false, length=100)
 	private String lastName;
-	//
-	@Column(name="user_email", nullable=false, unique=true ,length=150)
+	@Column(nullable=false, unique=true ,length=150)
 	private String email;
-	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_role_id", nullable=false)
-	private UserRole user;
-	
-	@OneToMany(mappedBy="resolver", fetch=FetchType.EAGER)
-	private List<Reimb> resolver;
-	
-	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
-	private List<Reimb> author;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(nullable=false)
+	private UserRole roleID;
+	@OneToMany(mappedBy="author")
+    private Set<Reimb> reimb1;
+	@OneToMany(mappedBy="resolver")
+    private Set<Reimb> reimb2;
+//	
+//	@OneToMany(mappedBy="resolver", fetch=FetchType.LAZY)
+//	private List<Reimb> resolver;
+//	
+//	@OneToMany(mappedBy="author", fetch=FetchType.LAZY)
+//	private List<Reimb> author;
 
-	public User() {
+	public Users() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int userID, String username, String password, String firstName, String lastName, String email,
-			UserRole user, List<Reimb> resolver, List<Reimb> author) {
+	public Users(int userID, String username, String password, String firstName, String lastName, String email,
+			UserRole roleID, Set<Reimb> reimb1, Set<Reimb> reimb2) {
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -51,27 +50,26 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.user = user;
-		this.resolver = resolver;
-		this.author = author;
+		this.roleID = roleID;
+		this.reimb1 = reimb1;
+		this.reimb2 = reimb2;
 	}
 
-	
-	public User(String username, String password, String firstName, String lastName, String email, UserRole user,
-			List<Reimb> resolver, List<Reimb> author) {
+	public Users(String username, String password, String firstName, String lastName, String email, UserRole roleID,
+			Set<Reimb> reimb1, Set<Reimb> reimb2) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.user = user;
-		this.resolver = resolver;
-		this.author = author;
+		this.roleID = roleID;
+		this.reimb1 = reimb1;
+		this.reimb2 = reimb2;
 	}
 
 	//Update
-	public User(int userID, String username, String password, String firstName, String lastName, String email) {
+	public Users(int userID, String username, String password, String firstName, String lastName, String email, UserRole roleID) {
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -79,22 +77,24 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.roleID = roleID;
 	}
 
 	//Insert
-	public User(String username, String password, String firstName, String lastName, String email) {
+	public Users(String username, String password, String firstName, String lastName, String email, UserRole roleID) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.roleID = roleID;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email + ", user=" + user + "]";
+		return "Users [userID=" + userID + ", username=" + username + ", password=" + password + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
 
 	public int getUserID() {
@@ -145,28 +145,12 @@ public class User {
 		this.email = email;
 	}
 
-	public UserRole getUser() {
-		return user;
+	public UserRole getRoleID() {
+		return roleID;
 	}
 
-	public void setUser(UserRole user) {
-		this.user = user;
-	}
-
-	public List<Reimb> getResolver() {
-		return resolver;
-	}
-
-	public void setResolver(List<Reimb> resolver) {
-		this.resolver = resolver;
-	}
-
-	public List<Reimb> getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(List<Reimb> author) {
-		this.author = author;
+	public void setRoleID(UserRole roleID) {
+		this.roleID = roleID;
 	}
 
 	@Override
@@ -177,9 +161,9 @@ public class User {
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((resolver == null) ? 0 : resolver.hashCode());
-		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((reimb1 == null) ? 0 : reimb1.hashCode());
+		result = prime * result + ((reimb2 == null) ? 0 : reimb2.hashCode());
+		result = prime * result + ((roleID == null) ? 0 : roleID.hashCode());
 		result = prime * result + userID;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -193,7 +177,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -214,20 +198,20 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (resolver == null) {
-			if (other.resolver != null)
+		if (reimb1 == null) {
+			if (other.reimb1 != null)
 				return false;
-		} else if (!resolver.equals(other.resolver))
+		} else if (!reimb1.equals(other.reimb1))
 			return false;
-		if (author == null) {
-			if (other.author != null)
+		if (reimb2 == null) {
+			if (other.reimb2 != null)
 				return false;
-		} else if (!author.equals(other.author))
+		} else if (!reimb2.equals(other.reimb2))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (roleID == null) {
+			if (other.roleID != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!roleID.equals(other.roleID))
 			return false;
 		if (userID != other.userID)
 			return false;
@@ -238,7 +222,7 @@ public class User {
 			return false;
 		return true;
 	}
+
 	
-	
-	
+
 }

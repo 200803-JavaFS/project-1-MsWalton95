@@ -3,6 +3,7 @@
   <display-name>project1</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
+       <welcome-file>default.html</welcome-file>
 	<welcome-file>profile.html</welcome-file>
 	<welcome-file>addTicket.html</welcome-file>
 	<welcome-file>viewTicket.html</welcome-file>
@@ -19,6 +20,7 @@
 	</filter-mapping>
 	
   <servlet>
+  <display-name>MasterServlet</display-name>
   	<servlet-name>MasterServlet</servlet-name>
   	<servlet-class>com.revature.web.MasterServlet</servlet-class>
   </servlet>

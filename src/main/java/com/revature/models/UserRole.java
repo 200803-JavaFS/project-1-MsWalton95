@@ -1,49 +1,36 @@
 package com.revature.models;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="ers_user_roles")
-public class UserRole {
-
+public class UserRole implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ers_user_role_id")
 	private int roleID;
-	
-	@Column(name="user_role", nullable=false, length=20)
+	@Column(nullable=false, length=20)
 	private String userRole;
-	
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
-	private List<User> users;
+	@OneToMany(mappedBy="roleID")
+    private Set<Users> users;
 	
 	public UserRole() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public UserRole(int roleID, String userRole, List<User> users) {
+	
+	public UserRole(int roleID, String userRole) {
 		super();
 		this.roleID = roleID;
 		this.userRole = userRole;
-		this.users = users;
 	}
 
-	public UserRole(String userRole, List<User> users) {
-		super();
-		this.userRole = userRole;
-		this.users = users;
-	}
-	
 	public UserRole(String userRole) {
 		super();
 		this.userRole = userRole;
-	}
-
-	@Override
-	public String toString() {
-		return "UserRole [roleID=" + roleID + ", userRole=" + userRole + "]";
 	}
 
 	public int getRoleID() {
@@ -61,13 +48,11 @@ public class UserRole {
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
+	
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
+	@Override
+	public String toString() {
+		return "UserRole [roleID=" + roleID + ", userRole=" + userRole + "]";
 	}
 
 	@Override
@@ -76,7 +61,6 @@ public class UserRole {
 		int result = 1;
 		result = prime * result + roleID;
 		result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
 		return result;
 	}
 
@@ -96,13 +80,10 @@ public class UserRole {
 				return false;
 		} else if (!userRole.equals(other.userRole))
 			return false;
-		if (users == null) {
-			if (other.users != null)
-				return false;
-		} else if (!users.equals(other.users))
-			return false;
 		return true;
 	}
+
+
 
 	
 }

@@ -8,15 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.models.User;
-import com.revaure.services.UserService;
+import com.revature.models.Users;
+import com.revature.services.UserService;
 
 public class UserController {
 	private static UserService us = new UserService();
 	private static ObjectMapper om = new ObjectMapper();
 	
 	public void getUser(HttpServletResponse res, int id) throws IOException {
-		User u = us.selectbyId(id);
+		Users u = us.selectbyId(id);
 		if(u == null) {
 			res.setStatus(204);
 		} else {
@@ -29,7 +29,7 @@ public class UserController {
 	
 	public void getAllUsers(HttpServletResponse res) throws IOException {
 		res.setStatus(200);
-		List<User> users = us.selectAll();
+		List<Users> users = us.selectAll();
 		String json = om.writeValueAsString(users);
 		res.getWriter().println(json);
 		
@@ -52,11 +52,11 @@ public class UserController {
 		
 		System.out.println(body);
 		
-		User u = om.readValue(body, User.class);
+		Users u = om.readValue(body, Users.class);
 		
 		System.out.println(u);
 		
-		if (us.insert(u, id)) {
+		if (us.insert(u)) {
 			res.setStatus(201);
 			res.getWriter().println("Avenger was created");
 		} else {

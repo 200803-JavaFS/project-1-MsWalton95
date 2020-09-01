@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.revature.daoimpl.IReimbTypeDAO;
 import com.revature.models.ReimbType;
 import com.revature.util.HibernateUtil;
 
@@ -66,7 +67,7 @@ public class ReimbTypeDAO implements IReimbTypeDAO{
 		Transaction tx = null;
 		try {
 			tx = ses.beginTransaction();
-			String hql = "FROM com.revature.models.ReimbType";
+			String hql = "FROM ReimbType";
 		
 			@SuppressWarnings("unchecked")
 			Query<ReimbType> query = ses.createQuery(hql);

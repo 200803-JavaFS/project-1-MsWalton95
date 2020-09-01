@@ -2,25 +2,21 @@ package com.revature.web;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.revature.controllers.LoginController;
-import com.revature.controllers.ReimbController;
+//import com.revature.controllers.ReimbController;
 import com.revature.controllers.UserController;
-import com.revature.models.User;
-import com.revaure.services.UserService;
 
 public class MasterServlet extends HttpServlet{
-	
+	private static final long serialVersionUID = 1L;
 	private static LoginController lc = new LoginController();
 	private static UserController uc = new UserController();
-	private static ReimbController rc = new ReimbController();
+	//private static ReimbController rc = new ReimbController();
 	
 	public MasterServlet() {
 		super();
@@ -42,7 +38,7 @@ public class MasterServlet extends HttpServlet{
 	try {
 		switch (portions[0]) {
 			case "user":
-				if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
+				//if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
 					if (req.getMethod().equals("GET")) {
 						if (portions.length == 2) {
 							int id = Integer.parseInt(portions[1]);
@@ -56,10 +52,10 @@ public class MasterServlet extends HttpServlet{
 							uc.addUser(req,res, id);
 						}
 					}
-				} else {
-					res.setStatus(403);
-					res.getWriter().println("You must be logged in to do that!");
-				}
+//				} else {
+//					res.setStatus(403);
+//					res.getWriter().println("You must be logged in to do that!");
+//				}
 				break;
 			case "login":
 				lc.login(req, res);

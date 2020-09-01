@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.models.User;
-import com.revaure.services.UserService;
+import com.revature.models.Users;
+import com.revature.services.UserService;
 
 public class LoginController {
 	
@@ -32,19 +32,16 @@ public class LoginController {
 			}
 	
 			String body = new String(sb);
-			User u = om.readValue(body, User.class);
+			Users u = om.readValue(body, Users.class);
 			
 			
-	//		String username = req.getParameter("user");
-	//		String password = req.getParameter("pwd");
+			String username = req.getParameter("user");
+			String password = req.getParameter("pwd");
 
-	//		u.setUsername(username);
-	//		u.setPassword(password);
 			
 	//		RequestDispatcher rd = null;
 		
-			if(us.userLogin(u)) {
-				us.userLogin(u);
+			if(us.userLogin(username, password)) {
 				HttpSession ses = req.getSession();
 				ses.setAttribute("user", u);
 				ses.setAttribute("name", u.getFirstName());
@@ -72,7 +69,7 @@ public class LoginController {
 		HttpSession ses = req.getSession(false);
 
 		if (ses != null) {
-			User u = (User) ses.getAttribute("user");
+			Users u = (Users) ses.getAttribute("user");
 			ses.invalidate();
 			res.setStatus(200);
 			res.getWriter().println(u.getFirstName() + " has logged out successfully");

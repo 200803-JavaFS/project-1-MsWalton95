@@ -1,20 +1,20 @@
-package com.revaure.services;
+package com.revature.services;
 
 import java.util.List;
 
-import com.revature.daos.IReimbDAO;
+import com.revature.daoimpl.IReimbDAO;
 import com.revature.daos.ReimbDAO;
 import com.revature.models.Reimb;
 
 public class ReimbService {
 	public static IReimbDAO reDao = new ReimbDAO();
 	
-	public boolean insert(Reimb re, int type, int status, int author) { 
-		return reDao.insert(re, type, status, author);
+	public boolean insert(Reimb re) { 
+		return reDao.insert(re);
 	}
 	
-	public boolean update(Reimb re, int type, int status, int author, int resolver) {
-		return reDao.update(re, type, status, author, resolver);
+	public boolean update(Reimb re) {
+		return reDao.update(re);
 	}
 	
 	public Reimb selectbyId(int id) {

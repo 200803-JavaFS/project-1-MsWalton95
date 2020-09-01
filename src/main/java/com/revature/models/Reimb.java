@@ -1,203 +1,151 @@
 package com.revature.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="ers_reimbursement")
-public class Reimb {
+public class Reimb implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="reimb_id", nullable=false)
 	private int reimbID;
-	
-	@Column(name="reimb_amount", nullable=false)
+	@Column(nullable=false)
 	private double amount;
-	
-	@Column(name="reimb_submitted", nullable=false)
+	@Column(nullable=false)
 	private Timestamp submitted;
-	
-	@Column(name="reimb_resolved")
 	private Timestamp resolved;
-	
-	@Column(name="reimb_description", length=250)
+	@Column(length=250)
 	private String description;
-	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="reimb_author", nullable=false)
-	private User author;
-
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="reimb_resolver")
-	private User resolver;
-	
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="reimb_status_id", nullable=false)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(nullable=false)
 	private ReimbStatus status;
-
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="reimb_type_id", nullable=false)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(nullable=false)
 	private ReimbType type;
-
-	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(nullable=false)
+	private Users author;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(nullable=true)
+	private Users resolver;
 	public Reimb() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-	public Reimb(int reimbID, double amount, Timestamp submitted, Timestamp resolved, String description, User author,
-			User resolver, ReimbStatus status, ReimbType type) {
+	public Reimb(int reimbID, double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status,
+			ReimbType type, Users author, Users resolver) {
 		super();
 		this.reimbID = reimbID;
 		this.amount = amount;
 		this.submitted = submitted;
 		this.resolved = resolved;
 		this.description = description;
-		this.author = author;
-		this.resolver = resolver;
 		this.status = status;
 		this.type = type;
+		this.author = author;
+		this.resolver = resolver;
 	}
-	
-	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description, User author,
-			User resolver, ReimbStatus status, ReimbType type) {
+	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status, ReimbType type,
+			Users author, Users resolver) {
 		super();
 		this.amount = amount;
 		this.submitted = submitted;
 		this.resolved = resolved;
 		this.description = description;
-		this.author = author;
-		this.resolver = resolver;
 		this.status = status;
 		this.type = type;
+		this.author = author;
+		this.resolver = resolver;
 	}
 	
-	//Update
-		public Reimb(int reimbID, double amount, Timestamp submitted, Timestamp resolved, String description) {
-			super();
-			this.reimbID = reimbID;
-			this.amount = amount;
-			this.submitted = submitted;
-			this.description = description;
-			this.resolved = resolved;
-		}
-	
 	//Insert
-	public Reimb(double amount, Timestamp submitted, String description) {
+	public Reimb(double amount, Timestamp submitted, String description, ReimbStatus status, ReimbType type, Users author) {
 		super();
 		this.amount = amount;
 		this.submitted = submitted;
 		this.description = description;
+		this.status = status;
+		this.type = type;
+		this.author = author;
 	}
-
-
+	
+	//UpTimestamp
+	public Reimb(int reimbID, Timestamp resolved, ReimbStatus status, Users resolver) {
+		super();
+		this.reimbID = reimbID;
+		this.resolved = resolved;
+		this.status = status;
+		this.resolver = resolver;
+	}
 	@Override
 	public String toString() {
 		return "Reimb [reimbID=" + reimbID + ", amount=" + amount + ", submitted=" + submitted + ", resolved="
 				+ resolved + ", description=" + description + "]";
 	}
-
-
 	public int getReimbID() {
 		return reimbID;
 	}
-
-
 	public void setReimbID(int reimbID) {
 		this.reimbID = reimbID;
 	}
-
-
 	public double getAmount() {
 		return amount;
 	}
-
-
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-
-
 	public Timestamp getSubmitted() {
 		return submitted;
 	}
-
-
 	public void setSubmitted(Timestamp submitted) {
 		this.submitted = submitted;
 	}
-
-
 	public Timestamp getResolved() {
 		return resolved;
 	}
-
-
 	public void setResolved(Timestamp resolved) {
 		this.resolved = resolved;
 	}
-
-
 	public String getDescription() {
 		return description;
 	}
-
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-	public User getAuthor() {
-		return author;
-	}
-
-
-	public void setAuthor(User author) {
-		this.author = author;
-	}
-
-
-	public User getResolver() {
-		return resolver;
-	}
-
-
-	public void setResolver(User resolver) {
-		this.resolver = resolver;
-	}
-
-
 	public ReimbStatus getStatus() {
 		return status;
 	}
-
-
 	public void setStatus(ReimbStatus status) {
 		this.status = status;
 	}
-
-
 	public ReimbType getType() {
 		return type;
 	}
-
-
 	public void setType(ReimbType type) {
 		this.type = type;
 	}
-
-
+	public Users getAuthor() {
+		return author;
+	}
+	public void setAuthor(Users author) {
+		this.author = author;
+	}
+	public Users getResolver() {
+		return resolver;
+	}
+	public void setResolver(Users resolver) {
+		this.resolver = resolver;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -215,8 +163,6 @@ public class Reimb {
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -267,6 +213,5 @@ public class Reimb {
 			return false;
 		return true;
 	}
-	
 	
 }

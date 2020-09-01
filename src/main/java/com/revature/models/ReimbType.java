@@ -1,41 +1,39 @@
 package com.revature.models;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="ers_reimbursement_type")
-public class ReimbType {
+public class ReimbType implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="reimb_type_id", nullable=false)
 	private int typeID;
-	
-	@Column(name="reimb_type", nullable=false, length=10)
+	@Column(nullable=false, length=10)
 	private String type;
-	
-	@OneToMany(mappedBy="type", fetch=FetchType.EAGER)
-	private List<Reimb> reimb;
+	@OneToMany(mappedBy="type")
+    private Set<Reimb> reimbs;
 
 	public ReimbType() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReimbType(int typeID, String type, List<Reimb> reimb) {
+	public ReimbType(int typeID, String type, Set<Reimb> reimbs) {
 		super();
 		this.typeID = typeID;
 		this.type = type;
-		this.reimb = reimb;
+		this.reimbs = reimbs;
 	}
 
-	public ReimbType(String type, List<Reimb> reimb) {
+	public ReimbType(int typeID, String type) {
 		super();
+		this.typeID = typeID;
 		this.type = type;
-		this.reimb = reimb;
 	}
-	
+
 	public ReimbType(String type) {
 		super();
 		this.type = type;
@@ -62,19 +60,10 @@ public class ReimbType {
 		this.type = type;
 	}
 
-	public List<Reimb> getReimb() {
-		return reimb;
-	}
-
-	public void setReimb(List<Reimb> reimb) {
-		this.reimb = reimb;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((reimb == null) ? 0 : reimb.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + typeID;
 		return result;
@@ -89,11 +78,6 @@ public class ReimbType {
 		if (getClass() != obj.getClass())
 			return false;
 		ReimbType other = (ReimbType) obj;
-		if (reimb == null) {
-			if (other.reimb != null)
-				return false;
-		} else if (!reimb.equals(other.reimb))
-			return false;
 		if (type == null) {
 			if (other.type != null)
 				return false;
@@ -103,6 +87,5 @@ public class ReimbType {
 			return false;
 		return true;
 	}
-	
-	
+
 }
