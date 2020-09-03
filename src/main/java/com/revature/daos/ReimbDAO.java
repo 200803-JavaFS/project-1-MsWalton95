@@ -99,7 +99,6 @@ public class ReimbDAO implements IReimbDAO{
 			List<Reimb> results = query.list();
 			
 			if(results.isEmpty()) {
-				System.out.println(" There are no reimbursements");
 				return null;
 			}else{
 				tx.commit();

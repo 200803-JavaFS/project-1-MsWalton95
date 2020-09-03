@@ -14,12 +14,12 @@
   <div class="w-75 mx-auto">
     <div class="bg main-content">
       <nav class="navbar navbar-expand-lg navbar-light px-4 p-0">
-        <a class="navbar-brand p-0" href="home"><img src="img/logo.jpg"  class="mr-2" width="40px" height="40px">Ace Reimbursement System</a>
+        <a class="navbar-brand p-0" href="profile.html"><img src="img/logo.jpg"  class="mr-2" width="40px" height="40px">Ace Reimbursement System</a>
         <ul class="navbar-nav">
-          <li><a class="nav-link active p-3" href="home">Home<span class="sr-only">(current)</span></a></li>
-          <li><a class="nav-link p-3" href="addTicket">Add Ticket</a></li>
-          <li><a class="nav-link p-3" href="viewTicket">View Tickets</a></li>
-          <li><a class="nav-link p-3" href="logout">Log Out</a></li>
+          <li><a class="nav-link active p-3" href="profile.html">Home<span class="sr-only">(current)</span></a></li>
+          <li><a class="nav-link p-3" href="addTicket.html">Add Ticket</a></li>
+          <li><a class="nav-link p-3" href="viewTicket.html">View Tickets</a></li>
+          <li><a class="nav-link p-3" href="login.html">Log Out</a></li>
         </ul>
       </nav>
       <!-- Optional - Add Update Button -->
@@ -27,9 +27,9 @@
         <div id="profile-pic" class="h-100" >
           <img src="img/profile.jpg" class="w-100" style="object-fit:cover">
           <div id="profile-info" class="text-center py-3">
-            <h3 style="font-size: 3em;"> Jane Doe</h3>
-            <h5> janedoe@email.com</h5>
-            <h5>555-555-1234</h5>
+            <h3 id="name" style="font-size: 3em;"> Jane Doe</h3>
+            <h5 id="email"> janedoe@email.com</h5>
+            <h5 id="phone">555-555-1234</h5>
           </div>
         </div>
 
@@ -69,39 +69,18 @@
         <table id="profile-table" class="table table-borderless">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col"></th>
             <th scope="col">Amount</th>
             <th scope="col">Submitted</th>
+            <th scope="col">Resolved</th>
             <th scope="col">Description</th>
-            <th scope="col">Author</th>
+            <th scope="col">Status</th>
             <th scope="col">Type</th>
+            <th scope="col">Author</th>
+            <th scope="col">Resolver</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>$250</td>
-            <td>2020-08-20</td>
-            <td>business trip</td>
-            <td>1</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>$250</td>
-            <td>2020-08-20</td>
-            <td>business trip</td>
-            <td>1</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>$250</td>
-            <td>2020-08-20</td>
-            <td>business trip</td>
-            <td>1</td>
-            <td>1</td>
-          </tr>
+        <tbody id="profileTicket">
         </tbody>
         </table>
 
@@ -110,8 +89,10 @@
       <footer class="bg-dark">
         <p class="text-light text-center p-3 m-0"> @ 2020 Ace Reimbursement System. All Rights reserved.</p>
       </footer>
-      <script src="/script/weather.js"></script>
-      <script src="/script/script.js"></script>
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+      <script src="script/profile.js"></script>
+      <script src="script/main.js"></script>
   </div>
 </body>
 </html>

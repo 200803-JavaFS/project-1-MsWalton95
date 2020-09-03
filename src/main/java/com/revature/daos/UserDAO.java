@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.revature.daoimpl.IUserDAO;
+import com.revature.models.Reimb;
 import com.revature.models.ReimbStatus;
 import com.revature.models.Users;
 import com.revature.models.UserRole;
@@ -19,14 +20,28 @@ public class UserDAO implements IUserDAO{
 	@Override
 	public List<Users> selectAll() {
 		Session ses = HibernateUtil.getSession();
-
-		List<Users> list = ses.createQuery("FROM Users").list();
-
-		if(list.isEmpty()) {
-			return null;
-		}else {
-		return list;
+		Transaction tx = null;
+		try {
+			tx = ses.beginTransaction();
+			String hql = "SELECT U FROM Users U";
+		
+			@SuppressWarnings("unchecked")
+			Query<Users> query = ses.createQuery(hql);
+			List<Users> results = query.list();
+			
+			if(results.isEmpty()) {
+				return null;
+			}else{
+				tx.commit();
+				return results;
+			}
+			
+		}catch(HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
 		}
+		
+		return null;
 	}
 
 	@Override
@@ -150,7 +165,7 @@ public class UserDAO implements IUserDAO{
 			@SuppressWarnings("unchecked")
 			Query<Users> query = ses.createQuery(hql);
 			
-			query.setParameter("u", username);
+			query.setParameter("u",username);
 			query.setParameter("p", password);
 			
 			List<Users> results = query.list();
@@ -160,6 +175,7 @@ public class UserDAO implements IUserDAO{
 				return false;
 			}else {
 				tx.commit();
+				System.out.println(results);
 				return true;
 				
 			}

@@ -38,6 +38,7 @@ public class Reimb implements Serializable{
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(nullable=true)
 	private Users resolver;
+	
 	public Reimb() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -21,13 +21,6 @@ public class ReimbStatus implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReimbStatus(int statusID, String status, Set<Reimb> reimbs) {
-		super();
-		this.statusID = statusID;
-		this.status = status;
-		this.reimbs = reimbs;
-	}
-
 	public ReimbStatus(int statusID, String status) {
 		super();
 		this.statusID = statusID;

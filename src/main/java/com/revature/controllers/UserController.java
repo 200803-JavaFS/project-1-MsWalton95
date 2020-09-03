@@ -29,8 +29,8 @@ public class UserController {
 	
 	public void getAllUsers(HttpServletResponse res) throws IOException {
 		res.setStatus(200);
-		List<Users> users = us.selectAll();
-		String json = om.writeValueAsString(users);
+		List<Users> all = us.selectAll();
+		String json = om.writeValueAsString(all);
 		res.getWriter().println(json);
 		
 		
@@ -58,7 +58,7 @@ public class UserController {
 		
 		if (us.insert(u)) {
 			res.setStatus(201);
-			res.getWriter().println("Avenger was created");
+			res.getWriter().println("New user was created");
 		} else {
 			res.setStatus(403);
 		}

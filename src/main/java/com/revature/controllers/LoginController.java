@@ -32,35 +32,26 @@ public class LoginController {
 			}
 	
 			String body = new String(sb);
+			
+			
 			Users u = om.readValue(body, Users.class);
 			
+//			String username = req.getParameter("user");
+//			String password = req.getParameter("pwd");
 			
-			String username = req.getParameter("user");
-			String password = req.getParameter("pwd");
-
-			
-	//		RequestDispatcher rd = null;
-		
-			if(us.userLogin(username, password)) {
+			if(us.userLogin(u.getUsername(), u.getPassword())) {
 				HttpSession ses = req.getSession();
 				ses.setAttribute("user", u);
 				ses.setAttribute("name", u.getFirstName());
 				ses.setAttribute("loggedin", true);
 	
 				res.setStatus(200);
-				System.out.println("Login Successful");
-	//			rd = req.getRequestDispatcher("profile.html");
-	//			rd.forward(req, res);
 			}else {
 				HttpSession ses = req.getSession(false);
 				if (ses != null) {
 					ses.invalidate();
 				}
 				res.setStatus(401);
-				System.out.println("Login failed");
-				
-	//			rd = req.getRequestDispatcher("");
-	//			rd.include(req, res);
 			}
 		}
 	}
