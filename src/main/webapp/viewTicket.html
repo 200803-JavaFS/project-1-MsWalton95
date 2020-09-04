@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <div class="w-75 mx-auto">
@@ -27,31 +28,10 @@
           <h2>Reimbursement History</h2>
           <div id="pending">
             <h4>Pending</h4>
-            <div class="transaction">
-              <div class="trans">
-                <h5>Ticket #151</h5>
-                <h6>In process...</h6>
-              </div>
-              <h3>150.00</h3>
-            </div>
           </div>
 
           <div id="complete">
             <h4>Completed</h4>
-            <div class="transaction">
-              <div class="trans">
-                <h5>Ticket #150</h5>
-                <h6>Completed</h6>
-              </div>
-              <h3>120.00</h3>
-            </div>
-            <div class="transaction">
-              <div class="trans">
-                <h5>Ticket #149</h5>
-                <h6>Failed</h6>
-              </div>
-              <h3>120.00</h3>
-            </div>
           </div>
 
         </div>
@@ -104,15 +84,15 @@
             </li>
             <li>
               <h6>Status</h6>
-              <h5 id="status" class="p-0">Other</h5>
+              <h5 id="status">Other</h5>
             </li>
             <li>
               <h6>Type</h6>
-              <h5 id="type" class="p-0">Other</h5>
+              <h5 id="type">Other</h5>
             </li>
             <li>
               <h6>Author</h6>
-              <h5 id="name">Employee name</h5>
+              <h5 id="author">Employee name</h5>
             </li>
             <li>
               <h6>Resolver</h6>
@@ -121,8 +101,8 @@
           </ul>
           <hr>
           <div class="updateBtn d-flex justify-content-around">
-          <button class="btn btn-lg" style="background-color:#086a52">Approve</button>
-          <button class="btn btn-lg" style="background-color:#870c0c">Deny</button>
+          <button id="approveBtn" class="btn btn-lg" style="background-color:#086a52">Approve</button>
+          <button id="denyBtn" class="btn btn-lg" style="background-color:#870c0c">Deny</button>
         </div>
         </aside>
       </div>
@@ -132,6 +112,7 @@
       <p class="text-light text-center p-3 m-0"> @ 2020 Ace Reimbursement System. All Rights reserved.</p>
     </footer>
   </div>
-  <script src="/script/main.js"></script>
+  <script src="/script/view.js"></script>
+
 </body>
 </html>

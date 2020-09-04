@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@700&display=swap" rel="stylesheet"> 
 </head>
 <body style=" background-image: url(img/homeImage3.jpg);background-size: 100vw; background-repeat: repeat-y; min-height: 100vh;">
@@ -25,11 +23,11 @@
       <!-- Optional - Add Update Button -->
       <div id="profile" class="d-flex justify-content-center align-items-center">
         <div id="profile-pic" class="h-100" >
-          <img src="img/profile.jpg" class="w-100" style="object-fit:cover">
-          <div id="profile-info" class="text-center py-3">
-            <h3 id="name" style="font-size: 3em;"> Jane Doe</h3>
-            <h5 id="email"> janedoe@email.com</h5>
-            <h5 id="phone">555-555-1234</h5>
+          <img src="" id="photo" class="w-100" >
+          <div id="profile-info">
+            <h3 id="name"> Jane Doe</h3>
+            <h6 id="email"> janedoe@email.com</h6>
+            <h6 id="phone">555-555-1234</h6>
           </div>
         </div>
 
@@ -69,15 +67,11 @@
         <table id="profile-table" class="table table-borderless">
         <thead>
           <tr>
-            <th scope="col"></th>
+            <th scope="col">Ticket #</th>
             <th scope="col">Amount</th>
             <th scope="col">Submitted</th>
             <th scope="col">Resolved</th>
-            <th scope="col">Description</th>
             <th scope="col">Status</th>
-            <th scope="col">Type</th>
-            <th scope="col">Author</th>
-            <th scope="col">Resolver</th>
           </tr>
         </thead>
         <tbody id="profileTicket">
@@ -92,7 +86,6 @@
       
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
       <script src="script/profile.js"></script>
-      <script src="script/main.js"></script>
   </div>
 </body>
 </html>

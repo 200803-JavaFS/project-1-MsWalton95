@@ -14,11 +14,5 @@ public interface IReimbDAO {
 	
 	public List<Reimb> selectAll();
 	
-	public List<Reimb> selectByStatus(int id);
-	
-	public List<Reimb> selectByType(int id);
-	
-	public List<Reimb> selectByAuthor(int id);
-	
-	public List<Reimb> selectByResolver(int id);
+	public List<Reimb> selectByUser(int id);
 }

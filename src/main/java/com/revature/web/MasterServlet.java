@@ -41,10 +41,10 @@ public class MasterServlet extends HttpServlet{
 			case "user":
 				//if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
 					if (req.getMethod().equals("GET")) {
-						if (portions.length == 2) {
+						if (portions.length == 2) {//ex. user/4/
 							int id = Integer.parseInt(portions[1]);
 							uc.getUser(res, id);
-						} else if (portions.length == 1) {
+						} else if (portions.length == 1) {//ex. user/
 							uc.getAllUsers(res);
 						}
 					} else if (req.getMethod().equals("POST")) {
@@ -61,14 +61,14 @@ public class MasterServlet extends HttpServlet{
 			case "reimbursement":
 				//if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
 					if (req.getMethod().equals("GET")) {
-						if (portions.length == 2) {
+						if (portions.length == 2) {//ex. reimbursement/2
 							int id = Integer.parseInt(portions[1]);
 							rc.getReimb(res, id);
-						} else if (portions.length == 1) {
+						} else if (portions.length == 1) {//ex. reimbursement/
 							rc.getAllReimb(res);
-						} else if (portions.length == 3) {
-							int id2 = Integer.parseInt(portions[2]);
-							rc.getAllReimbByUser(res, id2);
+						} else if (portions.length == 3) {//ex. reimbursement/user/2
+							int id = Integer.parseInt(portions[2]);
+							rc.getAllReimbByUser(res, id);
 						}
 					} else if (req.getMethod().equals("POST")) {
 						if (portions.length == 2) {

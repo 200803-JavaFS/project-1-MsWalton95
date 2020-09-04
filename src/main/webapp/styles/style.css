@@ -78,6 +78,34 @@ nav ul li a:hover {
   background-color: #fafafa;
 }
 
+#profile #profile-pic #photo {
+  height: 70%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-color: lightgoldenrodyellow;
+  -o-object-position: top;
+     object-position: top;
+}
+
+#profile #profile-pic #profile-info {
+  text-align: center;
+  height: 30%;
+  margin: 2px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 #profile-extra #profile-fact {
   background-color: #fafafa;
   -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);

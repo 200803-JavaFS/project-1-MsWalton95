@@ -42,10 +42,11 @@ public class LoginController {
 			if(us.userLogin(u.getUsername(), u.getPassword())) {
 				HttpSession ses = req.getSession();
 				ses.setAttribute("user", u);
-				ses.setAttribute("name", u.getFirstName());
 				ses.setAttribute("loggedin", true);
 	
 				res.setStatus(200);
+				res.getWriter().println(u.getUsername() + " has logged in successfully");
+				System.out.println("Signed in");
 			}else {
 				HttpSession ses = req.getSession(false);
 				if (ses != null) {
@@ -63,7 +64,7 @@ public class LoginController {
 			Users u = (Users) ses.getAttribute("user");
 			ses.invalidate();
 			res.setStatus(200);
-			res.getWriter().println(u.getFirstName() + " has logged out successfully");
+			res.getWriter().println(ses.getAttribute("user") + u.getPassword() +" has logged out successfully");
 		} else {
 			res.setStatus(400);
 			res.getWriter().println("You must be logged in to logout!");

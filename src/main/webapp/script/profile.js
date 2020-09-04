@@ -1,3 +1,5 @@
+/* API and Time */
+
 //Random Facts
 let catfact = document.getElementById("catfact");
 
@@ -17,8 +19,6 @@ function renderHTML(data) {
     catfact.innerText = data.text;
 }
 
-randomFacts();
-
 //Clock
 function clock(){
     let date = document.getElementById("date");
@@ -29,8 +29,6 @@ function clock(){
     date.innerHTML = d.toDateString();
     time.innerHTML = d.toLocaleTimeString();
 }
-
-var interval = setInterval(clock, 1000);
 
 //Weather
 const api = {
@@ -57,8 +55,13 @@ function displayResults (weather){
 }
 
 getWeather(30080);
+randomFacts();
+setInterval(clock, 1000);
 
-const url = "http://127.0.0.1:8080/project0/"
+/* Retrieve User Information */
+
+const url = "http://127.0.0.1:8080/project0/";
+
 
 async function getProfile(user){
    let resp = await fetch(url + "user/" + user,{
@@ -67,15 +70,13 @@ async function getProfile(user){
 
    if(resp.status === 200){
        let data = await resp.json();
-           // document.getElementById("photo").innerHTML
+           document.getElementById("photo").setAttribute("src",`/img/profile-${user}.png`)
            document.getElementById("name").innerHTML = `${data.firstName} ${data.lastName}`;
            document.getElementById("email").innerHTML = data.email;
-   }else if(resp.status === 404){
-       window.open("404.html");
    }
 }
 
-async function getReimbursement(user){
+async function getTicket(user){
     let res = await fetch(url + "reimbursement/user/" + user,{
         credentials: "include"
     });
@@ -83,14 +84,12 @@ async function getReimbursement(user){
     if(res.status === 200){
         let data = await res.json();
             for (let ticket of data) {
-                let i =0;
-                i+=1;
-
-                //let d = new Date();
+                
+                 //let d = new Date();
                 //d.toDateString +" "+ d.toLocaleTimeString;
                 let row = document.createElement("tr");
                 let cell = document.createElement("td");
-                cell.innerHTML = i;
+                cell.innerHTML = ticket.reimbID;
                 row.appendChild(cell);
                 let cell2 = document.createElement("td");
                 cell2.innerHTML = `$${ticket.amount}`;
@@ -100,43 +99,24 @@ async function getReimbursement(user){
                 row.appendChild(cell3);
                 if(ticket.resolved == null){
                     let cell4 = document.createElement("td");
-                    cell4.innerHTML = "pending";
+                    cell4.innerHTML = "N/A";
                     row.appendChild(cell4);
                 }else{
                     let cell4 = document.createElement("td");
                     cell4.innerHTML = ticket.resolved;
                     row.appendChild(cell4);
                 }
-                let cell5 = document.createElement("td");
-                cell5.innerHTML = ticket.description;
-                row.appendChild(cell5);
                 let cell6 = document.createElement("td");
                 cell6.innerHTML = ticket.status.status;
                 row.appendChild(cell6);
-                let cell7 = document.createElement("td");
-                cell7.innerHTML = ticket.type.type;
-                row.appendChild(cell7);
-                let cell8 = document.createElement("td");
-                cell8.innerHTML = ticket.author.firstName + " " + ticket.author.lastName;
-                row.appendChild(cell8);
-                if(ticket.resolver == null){
-                    let cell9 = document.createElement("td");
-                    cell9.innerHTML = "pending";
-                    row.appendChild(cell9);
-                }else{
-                    let cell9 = document.createElement("td");
-                    cell9.innerHTML = ticket.resolver.firstName + " " + ticket.resolver.lastName;
-                    row.appendChild(cell9);
-                }
 
                 document.getElementById("profileTicket").appendChild(row);
             }
     }
 }
-
-
-getReimbursement(2);
-getProfile(2);
+let user = 1;
+addEventListener("onload", getProfile(user));
+addEventListener("onload", getTicket(user));
 
 // for (let ticket of data) {
 //     let i =0;

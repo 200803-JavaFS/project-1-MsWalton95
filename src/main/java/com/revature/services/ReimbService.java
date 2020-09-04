@@ -25,19 +25,8 @@ public class ReimbService {
 		return reDao.selectAll();
 	}
 	
-	public List<Reimb> selectByStatus(int id){
-		return reDao.selectByStatus(id);
+	public List<Reimb> selectByUser(int id){
+		return reDao.selectByUser(id);
 	}
-	
-	public List<Reimb> selectByType(int id){
-		return reDao.selectByType(id);
-	}
-	
-	public List<Reimb> selectByAuthor(int id){
-		return reDao.selectByAuthor(id);
-	}
-	
-	public List<Reimb> selectByResolver(int id){
-		return reDao.selectByResolver(id);
-	}
+
 }

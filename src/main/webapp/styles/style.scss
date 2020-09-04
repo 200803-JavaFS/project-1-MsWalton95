@@ -72,6 +72,24 @@ nav{
     width: 30%;
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
     background-color: $color0;
+    #photo{
+        height:70%; 
+        object-fit:cover; 
+        background-color:lightgoldenrodyellow; 
+        object-position: top;
+    }
+    #profile-info{
+        text-align: center;
+        height: 30%;
+        margin: 2px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
     }
 }
 

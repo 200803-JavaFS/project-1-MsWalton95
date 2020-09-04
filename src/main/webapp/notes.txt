@@ -1,8 +1,14 @@
 JavaScript
+    View Reimburse
+        
+        - scroll in the transaction history MAX: 30 PER PAGE
 
-View Reimburse
-    - When clicked transaction - show details in "ticket details"
-    - scroll in the transaction history
+    Add Reimburse   
+        - Description show when length is maxlength
 
-Add Reimburse   
-    - Description show when length is maxlength
+Function
+    LOGIN - POST ISSUES
+    ADD TICKETS TO DATABASE
+    CHANGE TO LOCALDATETIME 
+    SEARCH TICKET
+    VIEW TICKETS BY 5

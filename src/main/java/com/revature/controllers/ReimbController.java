@@ -46,7 +46,7 @@ public class ReimbController {
 	}
 	
 	public void getAllReimbByUser(HttpServletResponse res, int id) throws IOException {
-		List<Reimb> all = rs.selectByAuthor(id);
+		List<Reimb> all = rs.selectByUser(id);
 
 		if(all.isEmpty()) {
 			res.setStatus(204);
@@ -56,8 +56,9 @@ public class ReimbController {
 			String json = om.writeValueAsString(all);
 			res.getWriter().println(json);
 		}
-	}           
-
+	}       
+	
+	
 	public void addReimb(HttpServletRequest req, HttpServletResponse res, int id) throws IOException {
 		BufferedReader reader = req.getReader();
 		
