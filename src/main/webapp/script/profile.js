@@ -1,3 +1,6 @@
+const url = "http://127.0.0.1:8080/project0/";
+let user=1;
+//user data.userID to link from login to others
 /* API and Time */
 
 //Random Facts
@@ -60,9 +63,6 @@ setInterval(clock, 1000);
 
 /* Retrieve User Information */
 
-const url = "http://127.0.0.1:8080/project0/";
-
-
 async function getProfile(user){
    let resp = await fetch(url + "user/" + user,{
        credentials: "include"
@@ -83,10 +83,19 @@ async function getTicket(user){
 
     if(res.status === 200){
         let data = await res.json();
-            for (let ticket of data) {
+
+        const recent = data.splice(0,5);
+
+            for (let ticket of recent) {
                 
-                 //let d = new Date();
-                //d.toDateString +" "+ d.toLocaleTimeString;
+                let date = new Date(ticket.submitted).toLocaleDateString();
+                let time = new Date(ticket.submitted).toLocaleTimeString();
+                let submitted =`${date} ${time}`;
+
+                let date2 = new Date(ticket.resolved).toLocaleDateString();
+                let time2 = new Date(ticket.resolved).toLocaleTimeString();
+                let resolved =`${date2} ${time2}`;
+
                 let row = document.createElement("tr");
                 let cell = document.createElement("td");
                 cell.innerHTML = ticket.reimbID;
@@ -95,7 +104,7 @@ async function getTicket(user){
                 cell2.innerHTML = `$${ticket.amount}`;
                 row.appendChild(cell2);
                 let cell3 = document.createElement("td");
-                cell3.innerHTML = ticket.submitted;
+                cell3.innerHTML = submitted;
                 row.appendChild(cell3);
                 if(ticket.resolved == null){
                     let cell4 = document.createElement("td");
@@ -103,7 +112,7 @@ async function getTicket(user){
                     row.appendChild(cell4);
                 }else{
                     let cell4 = document.createElement("td");
-                    cell4.innerHTML = ticket.resolved;
+                    cell4.innerHTML = resolved;
                     row.appendChild(cell4);
                 }
                 let cell6 = document.createElement("td");
@@ -114,56 +123,6 @@ async function getTicket(user){
             }
     }
 }
-let user = 1;
+
 addEventListener("onload", getProfile(user));
 addEventListener("onload", getTicket(user));
-
-// for (let ticket of data) {
-//     let i =0;
-//     i+=1;
-
-//     //let d = new Date();
-//     //d.toDateString +" "+ d.toLocaleTimeString;
-//     let row = document.createElement("tr");
-//     let cell = document.createElement("td");
-//     cell.innerHTML = i;
-//     row.appendChild(cell);
-//     let cell2 = document.createElement("td");
-//     cell2.innerHTML = `$${ticket.amount}`;
-//     row.appendChild(cell2);
-//     let cell3 = document.createElement("td");
-//     cell3.innerHTML = ticket.submitted;
-//     row.appendChild(cell3);
-//     if(ticket.resolved == null){
-//         let cell4 = document.createElement("td");
-//         cell4.innerHTML = "pending";
-//         row.appendChild(cell4);
-//     }else{
-//         let cell4 = document.createElement("td");
-//         cell4.innerHTML = ticket.resolved;
-//         row.appendChild(cell4);
-//     }
-//     let cell5 = document.createElement("td");
-//     cell5.innerHTML = ticket.description;
-//     row.appendChild(cell5);
-//     let cell6 = document.createElement("td");
-//     cell6.innerHTML = ticket.status.status;
-//     row.appendChild(cell6);
-//     let cell7 = document.createElement("td");
-//     cell7.innerHTML = ticket.type.type;
-//     row.appendChild(cell7);
-//     let cell8 = document.createElement("td");
-//     cell8.innerHTML = ticket.author.firstName + " " + ticket.author.lastName;
-//     row.appendChild(cell8);
-//     if(ticket.resolver == null){
-//         let cell9 = document.createElement("td");
-//         cell9.innerHTML = "pending";
-//         row.appendChild(cell9);
-//     }else{
-//         let cell9 = document.createElement("td");
-//         cell9.innerHTML = ticket.resolver.firstName + " " + ticket.resolver.lastName;
-//         row.appendChild(cell9);
-//     }
-
-//     document.getElementById("profileTicket").appendChild(row);
-// }

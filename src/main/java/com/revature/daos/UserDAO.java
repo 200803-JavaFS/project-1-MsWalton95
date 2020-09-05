@@ -1,21 +1,20 @@
 package com.revature.daos;
 
 import java.util.List;
-import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.revature.daoimpl.IUserDAO;
-import com.revature.models.Reimb;
-import com.revature.models.ReimbStatus;
 import com.revature.models.Users;
-import com.revature.models.UserRole;
 import com.revature.util.HibernateUtil;
 
 public class UserDAO implements IUserDAO{
+	private static final Logger log = LogManager.getLogger(UserDAO.class);
 
 	@Override
 	public List<Users> selectAll() {
@@ -23,13 +22,14 @@ public class UserDAO implements IUserDAO{
 		Transaction tx = null;
 		try {
 			tx = ses.beginTransaction();
-			String hql = "SELECT U FROM Users U";
+			String hql = "FROM Users";
 		
 			@SuppressWarnings("unchecked")
 			Query<Users> query = ses.createQuery(hql);
 			List<Users> results = query.list();
 			
 			if(results.isEmpty()) {
+				tx.rollback();
 				return null;
 			}else{
 				tx.commit();
@@ -67,9 +67,13 @@ public class UserDAO implements IUserDAO{
 			
 			ses.save(u);
 			tx.commit();
+			
+			log.info("User added");
+			
 			return true;
 		} catch (Exception e) {
 			if (tx!=null) tx.rollback();
+			log.warn("Unable to add user");
 			e.printStackTrace();
 			return false;
 		}
@@ -87,10 +91,13 @@ public class UserDAO implements IUserDAO{
 			ses.merge(u);		
 			tx.commit();
 			
+			log.info("User updated");
+			
 			return true;
 			
 		}catch(HibernateException e) {
 			if (tx!=null) tx.rollback();
+			log.warn("Unable to update");
 			e.printStackTrace();
 		}
 		
@@ -99,10 +106,8 @@ public class UserDAO implements IUserDAO{
 
 	public List<Users> selectByName(String fName, String lName){
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
 		
 		try {
-			tx = ses.beginTransaction();
 			String hql = "FROM Users WHERE firstName=:f AND lastName=:l";
 			
 			@SuppressWarnings("unchecked")
@@ -112,52 +117,44 @@ public class UserDAO implements IUserDAO{
 			List<Users> results = query.list();
 			
 			if(results.isEmpty()) {
-				System.out.println(fName + " " + lName + " is not in this file");
 				return null;
 			}else{
-				tx.commit();
 				return results;
 			}
 		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
 	
-	public List<Users> selectByRole(int id){
+	public List<Users> selectByUsername(String username) {
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
 		
 		try {
-			tx = ses.beginTransaction();
-			String hql = "FROM Users WHERE user.roleID=:r";
+			String hql = "FROM Users WHERE username=:u";
 			
 			@SuppressWarnings("unchecked")
 			Query<Users> query = ses.createQuery(hql);
-			query.setParameter("r",id);
+			query.setParameter("u",username);
 			List<Users> results = query.list();
 			
 			if(results.isEmpty()) {
-				System.out.println( "There is no employees under this role id: " + id);
 				return null;
-			}else{
-				tx.commit();
+			}else {
 				return results;
+				
 			}
+			
 		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 	
 	public boolean userLogin(String username, String password) {	
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
-		
 		try {
 			tx = ses.beginTransaction();
 			String hql = "FROM Users WHERE username=:u AND password=:p";
@@ -171,11 +168,10 @@ public class UserDAO implements IUserDAO{
 			List<Users> results = query.list();
 	
 			if(results.isEmpty()) {
-				System.out.println("Username or password incorrect");
+				tx.rollback();
 				return false;
 			}else {
 				tx.commit();
-				System.out.println(results);
 				return true;
 				
 			}

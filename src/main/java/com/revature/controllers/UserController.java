@@ -15,6 +15,8 @@ public class UserController {
 	private static UserService us = new UserService();
 	private static ObjectMapper om = new ObjectMapper();
 	
+	
+	
 	public void getUser(HttpServletResponse res, int id) throws IOException {
 		Users u = us.selectbyId(id);
 		if(u == null) {
@@ -31,12 +33,11 @@ public class UserController {
 		res.setStatus(200);
 		List<Users> all = us.selectAll();
 		String json = om.writeValueAsString(all);
-		res.getWriter().println(json);
-		
+		res.getWriter().println(json);	
 		
 	}
 
-	public void addUser(HttpServletRequest req, HttpServletResponse res, int id) throws IOException {
+	public void addUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		BufferedReader reader = req.getReader();
 		
 		StringBuilder s = new StringBuilder();
@@ -64,16 +65,4 @@ public class UserController {
 		}
 		
 	}
-
-//	public boolean update(User u, int id);
-//	
-//	public User selectbyId(int id);
-//	
-//	public List<User> selectAll();
-//	
-//	public List<User> selectByRole(int id);
-//	
-//	public List<User> selectByName(String fname,String lname);
-//	
-//	public boolean userLogin(User u);
 }

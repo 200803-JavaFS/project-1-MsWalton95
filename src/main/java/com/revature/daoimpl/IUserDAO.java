@@ -14,9 +14,10 @@ public interface IUserDAO {
 	
 	public List<Users> selectAll();
 	
-	public List<Users> selectByRole(int id);
-	
 	public List<Users> selectByName(String fName, String lName);
 	
+	public List<Users> selectByUsername(String username);
+	
 	public boolean userLogin(String username, String password);
+	
 }

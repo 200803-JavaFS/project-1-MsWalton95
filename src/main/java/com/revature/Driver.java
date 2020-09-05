@@ -1,6 +1,8 @@
 package com.revature;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -28,6 +30,14 @@ public class Driver {
 		
 		UserRoleService role = new UserRoleService();
 		UserService user = new UserService();
+		
+		Calendar calendar = Calendar.getInstance();
+		Timestamp ts = new Timestamp(calendar.getTime().getTime());
+
+        System.out.println(ts);
+
+        Reimb r =reimb.selectbyId(1);
+        System.out.println(r.getSubmitted());
 
 //		List<Users> users = user.selectAll();
 //		for(Users u : users) {ObjectMapper om = new ObjectMapper();
@@ -78,10 +88,10 @@ public class Driver {
 //		
 //		Calendar calendar = Calendar.getInstance();
 //		Timestamp current = new Timestamp(calendar.getTime().getTime());
-//		Timestamp current2 = new Timestamp(calendar.getTime().getTime()+1);
+//		Timestamp current2 = new Timestamp(calendar.getTime().getTime()+100);
 //
-//		//amount, submitted, description, status, type, author
-//		//amount, submitted, resolved, description, status, type, author, resolver
+//		//amount, submitted, description, status, type, author //insert
+//		//amount, submitted, resolved, description, status, type, author, resolver //update
 //		Reimb r1 = new Reimb(85.00, current, "Business Conference", status2, type1, author1);//Pending 2 Lodging 1
 //		Reimb r2 = new Reimb(28.00, current, "Group Lunch", status2, type2, author1);//Pending 2  Food 2
 //		Reimb r3 = new Reimb(120.00, current, current2, "Hamburgers", status3, type2, author2, resolver1);//Denied 3 Food 2

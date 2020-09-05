@@ -39,23 +39,17 @@ public class ReimbStatusDAO implements IReimbStatusDAO{
 	
 	public ReimbStatus selectbyId(int id) {
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
 		
 		try {
-			tx = ses.beginTransaction();
-			
 			ReimbStatus re = ses.get(ReimbStatus.class, id);
 			
 			if(re == null) {
-				System.out.println(" There are no reimbursement status by that id");
 				return null;
 			}else{
-				tx.commit();
 				return re;
 			}
 			
 		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
 		
@@ -64,9 +58,7 @@ public class ReimbStatusDAO implements IReimbStatusDAO{
 	
 	public List<ReimbStatus> selectAll(){
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
 		try {
-			tx = ses.beginTransaction();
 			String hql = "FROM ReimbStatus";
 		
 			@SuppressWarnings("unchecked")
@@ -74,15 +66,12 @@ public class ReimbStatusDAO implements IReimbStatusDAO{
 			List<ReimbStatus> results = query.list();
 			
 			if(results.isEmpty()) {
-				System.out.println(" There are no reimbursement status");
 				return null;
 			}else{
-				tx.commit();
 				return results;
 			}
 			
 		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
 		

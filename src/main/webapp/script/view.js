@@ -12,14 +12,20 @@ async function viewTickets(user) {
         
         const pend = data.filter(ticket => ticket.status.status === "Pending");
         const comp = data.filter(ticket => ticket.status.status !== "Pending");
-
+        //  let jsObject = JSON.parse(data);
+        //  jsObject.submitted = new Date(jsObject.submitted);
+        //  console.log(jsObject.submitted);
 
 
         for (let ticket of pend) {
             let reimb = ticket.reimbID;
             let amount = ticket.amount;
-            let submitted = ticket.submitted;
-            let resolved = "N/A";
+
+            let date = new Date(ticket.submitted).toLocaleDateString();
+            //let time = new Date(ticket.submitted).toLocaleTimeString();
+            let submitted = date;
+
+            let resolved = "N/A"
             let description = ticket.description;
             let type = ticket.type.type;
             let status = "In process...";
@@ -63,13 +69,18 @@ async function viewTickets(user) {
         for (let ticket of comp) {
             let reimb = ticket.reimbID;
             let amount = ticket.amount;
-            let submitted = ticket.submitted;
-            let resolved = ticket.resolved;
+
+            let date = new Date(ticket.submitted).toLocaleDateString();
+            let submitted = date;
+
+            let date2 = new Date(ticket.resolved).toLocaleDateString();
+            let resolved = date2;
+
             let description = ticket.description;
             let type = ticket.type.type;
             let status = ticket.status.status;
             let author =` ${ticket.author.firstName} ${ticket.author.lastName}`;
-            //let resolver = ;
+
 
             let container = document.createElement("div");
             let contain = document.createElement("div");
@@ -110,15 +121,29 @@ async function viewTickets(user) {
             
         }
 
+        let date = new Date(data[0].submitted).toLocaleDateString();
+        let submitted = date;
+
+        let date2 = new Date(data[0].resolved).toLocaleDateString();
+        let resolved = date2;
+
         $("#ticket").html(data[0].reimbID);
         $("#amount").html(data[0].amount);
-        $("#submitted").html(data[0].submitted);
-        $("#resolved").html(data[0].resolved);
+        $("#submitted").html(submitted);
+        if(ticket.resolved ==  null){
+            $("#resolved").html("N/A");
+        }else{
+            $("#resolved").html(resolved);
+        }
         $("#description").html(data[0].description);
         $("#status").html(data[0].status.status);
         $("#type").html(data[0].type.type);
         $("#author").html(data[0].author.firstName + " " + data[0].author.lastName);
-        $("#resolver").html("N/A");
+        if(ticket.resolver ==  null){
+            $("#resolver").html("N/A");
+        }else{
+            $("#resolver").html(data[0].resolver);
+        }
         //$("#resolver").html(data[0].resolver.firstName + " " + data[0].resolver.lastName); // addEventListener("click", event =>{
 
         // });

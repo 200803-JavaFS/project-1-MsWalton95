@@ -27,16 +27,16 @@ public class UserService {
 		return uDao.selectAll();
 	}
 	
-	public List<Users> selectByRole(int id){
-		return uDao.selectByRole(id);
-	}
-	
 	public List<Users> selectByName(String fName, String lName){
 		return uDao.selectByName(fName, lName);
 	}
 	
 	public boolean userLogin(String username, String password){
 		return uDao.userLogin(username, password);
+	}
+	
+	public List<Users> selectByUsername(String username){
+		return uDao.selectByUsername(username);
 	}
 
 }

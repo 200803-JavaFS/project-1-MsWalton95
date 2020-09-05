@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
     <title>Add Ticket</title>
+    <link rel="icon" type="image/png" href="/img/favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@700&display=swap" rel="stylesheet"> 
@@ -21,7 +23,7 @@
         </ul>
       </nav>
       <div class="addForm">
-        <form id="addTicket" class="tables mx-auto">
+        <div id="addTicket" class="tables mx-auto" method="POST">
           <h2 class="mb-4">Reimbursement Form</h2> 
           <div class="form-group">
             <label for="amount">Amount</label>
@@ -42,7 +44,7 @@
           </div>
           <button type="submit" id="addTicketBtn" class="btn btn-block mt-4 text-light py-2">Add Ticket</button>
           <h3 id="ticketStatus"></h3>
-        </form>
+        </div>
       </div>
     </div>
     <footer class="bg-dark">

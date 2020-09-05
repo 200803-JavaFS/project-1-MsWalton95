@@ -7,8 +7,14 @@ JavaScript
         - Description show when length is maxlength
 
 Function
-    LOGIN - POST ISSUES
-    ADD TICKETS TO DATABASE
-    CHANGE TO LOCALDATETIME 
-    SEARCH TICKET
-    VIEW TICKETS BY 5
+    Changed resolved/submitted date to random times
+CSS
+    style "loginStatus"
+
+To-do
+   - IMPORTANT
+	Connect login users to other pages
+	Add Tickets
+	Update Tickets
+	Search Ticket
+	Logging

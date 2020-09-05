@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.revature.controllers.LoginController;
 import com.revature.controllers.ReimbController;
-//import com.revature.controllers.ReimbController;
 import com.revature.controllers.UserController;
 
 public class MasterServlet extends HttpServlet{
@@ -39,47 +39,49 @@ public class MasterServlet extends HttpServlet{
 	try {
 		switch (portions[0]) {
 			case "user":
-				//if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
+				if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
 					if (req.getMethod().equals("GET")) {
-						if (portions.length == 2) {//ex. user/4/
+						if (portions.length == 2) {		
 							int id = Integer.parseInt(portions[1]);
 							uc.getUser(res, id);
-						} else if (portions.length == 1) {//ex. user/
+						} else if (portions.length == 1) {	
 							uc.getAllUsers(res);
 						}
 					} else if (req.getMethod().equals("POST")) {
-						if (portions.length == 2) {
-							int id = Integer.parseInt(portions[1]);
-							uc.addUser(req, res, id);
-						}
+							uc.addUser(req, res);
 					}
-//				} else {
-//					res.setStatus(403);
-//					res.getWriter().println("You must be logged in to do that!");
-//				}
+				} else {
+					res.setStatus(403);
+					res.getWriter().println("You must be logged in to do that!");
+				}
 				break;
-			case "reimbursement":
-				//if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
+			case "reimbursement": //ex. reimbursement length:1		//ex. reimbursement/2  length:2		//ex. reimbursement/user/2 length:3
+				if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
 					if (req.getMethod().equals("GET")) {
-						if (portions.length == 2) {//ex. reimbursement/2
+						if (portions.length == 1) {					
+							rc.getAllReimb(res);
+						} else if (portions.length == 1) {			
 							int id = Integer.parseInt(portions[1]);
 							rc.getReimb(res, id);
-						} else if (portions.length == 1) {//ex. reimbursement/
-							rc.getAllReimb(res);
-						} else if (portions.length == 3) {//ex. reimbursement/user/2
+						} else if (portions.length == 3) {			
 							int id = Integer.parseInt(portions[2]);
 							rc.getAllReimbByUser(res, id);
 						}
 					} else if (req.getMethod().equals("POST")) {
-						if (portions.length == 2) {
-							int id = Integer.parseInt(portions[1]);
-							rc.addReimb(req, res, id);
-						}
+							rc.addReimb(req, res);
 					}
-//				} else {
-//					res.setStatus(403);
-//					res.getWriter().println("You must be logged in to do that!");
-//				}
+				} else {
+					res.setStatus(403);
+					res.getWriter().println("You must be logged in to do that!");
+				}
+				break;
+			case "type":  //ex. type/2
+					int id = Integer.parseInt(portions[1]);
+					rc.getType(res, id);
+				break;
+			case "status": //ex. status/2
+					int id2 = Integer.parseInt(portions[1]);
+					rc.getStatus(res, id2);
 				break;
 			case "login":
 				lc.login(req, res);
@@ -88,7 +90,6 @@ public class MasterServlet extends HttpServlet{
 				lc.logout(req, res);
 				break;
 		}
-
 	} catch (NumberFormatException e) {
 		e.printStackTrace();
 		res.getWriter().print("The id you provided is not an integer");
@@ -97,9 +98,9 @@ public class MasterServlet extends HttpServlet{
 
 }
 
-@Override
-protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	doGet(req, res);
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doGet(req, res);
+	}
 }
-
-}
+ 

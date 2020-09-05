@@ -39,34 +39,24 @@ public class ReimbTypeDAO implements IReimbTypeDAO{
 	
 	public ReimbType selectbyId(int id) {
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
-		
 		try {
-			tx = ses.beginTransaction();
-			
 			ReimbType re = ses.get(ReimbType.class, id);
 			
-			if(re==  null) {
-				System.out.println(" There are no reimbursement type by that id");
+			if(re == null) {
 				return null;
 			}else{
-				tx.commit();
 				return re;
 			}
 			
 		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 	
 	public List<ReimbType> selectAll(){
 		Session ses = HibernateUtil.getSession();
-		Transaction tx = null;
 		try {
-			tx = ses.beginTransaction();
 			String hql = "FROM ReimbType";
 		
 			@SuppressWarnings("unchecked")
@@ -74,18 +64,14 @@ public class ReimbTypeDAO implements IReimbTypeDAO{
 			List<ReimbType> results = query.list();
 			
 			if(results.isEmpty()) {
-				System.out.println(" There are no reimbursement type");
 				return null;
 			}else{
-				tx.commit();
 				return results;
 			}
 			
 		}catch(HibernateException e) {
-			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 }
