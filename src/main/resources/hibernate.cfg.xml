@@ -12,8 +12,6 @@
 		<!-- Additional Hibernate Properties -->
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		<!-- This will print the sql queries hibernate makes to the console -->
-		<property name="hibernate.show_sql">false</property>
-		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>		
 		<!-- Mappings -->
 		<mapping class="com.revature.models.UserRole"/>

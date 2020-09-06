@@ -56,32 +56,34 @@ public class MasterServlet extends HttpServlet{
 				}
 				break;
 			case "reimbursement": //ex. reimbursement length:1		//ex. reimbursement/2  length:2		//ex. reimbursement/user/2 length:3
-				if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
+				//if (req.getSession(false) != null && (boolean) req.getSession().getAttribute("loggedin")) {
 					if (req.getMethod().equals("GET")) {
 						if (portions.length == 1) {					
 							rc.getAllReimb(res);
-						} else if (portions.length == 1) {			
+						} else if (portions.length == 2) {			
 							int id = Integer.parseInt(portions[1]);
 							rc.getReimb(res, id);
 						} else if (portions.length == 3) {			
 							int id = Integer.parseInt(portions[2]);
-							rc.getAllReimbByUser(res, id);
+							rc.getAllReimbByUser(res, req);
 						}
-					} else if (req.getMethod().equals("POST")) {
-							rc.addReimb(req, res);
+					} else if (req.getMethod().equals("POST")) {	//ex. reimbursement/user/2/type/3
+						int user = Integer.parseInt(portions[2]);
+						int type = Integer.parseInt(portions[4]);
+						rc.addReimb(req, res, user, type);
 					}
-				} else {
-					res.setStatus(403);
-					res.getWriter().println("You must be logged in to do that!");
-				}
+//				} else {
+//					res.setStatus(403);
+//					res.getWriter().println("You must be logged in to do that!");
+//				}
 				break;
-			case "type":  //ex. type/2
-					int id = Integer.parseInt(portions[1]);
-					rc.getType(res, id);
+			case "type":
+				int id = Integer.parseInt(portions[1]);
+				rc.getType(res, id);
 				break;
-			case "status": //ex. status/2
-					int id2 = Integer.parseInt(portions[1]);
-					rc.getStatus(res, id2);
+			case "status":
+				int id2 = Integer.parseInt(portions[1]);
+				rc.getStatus(res, id2);
 				break;
 			case "login":
 				lc.login(req, res);

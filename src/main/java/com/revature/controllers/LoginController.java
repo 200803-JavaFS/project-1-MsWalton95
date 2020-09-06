@@ -22,7 +22,7 @@ public class LoginController {
 	private static ObjectMapper om = new ObjectMapper();
 	
 	private static final Logger log = LogManager.getLogger(LoginController.class);
-	
+
 	public void login(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 			BufferedReader reader = req.getReader();
 	
@@ -63,6 +63,7 @@ public class LoginController {
 		
 		String json = om.writeValueAsString(u);
 		res.getWriter().println(json);
+		
 		log.info("Logged in");
 	}
 	
@@ -73,11 +74,10 @@ public class LoginController {
 			Users u = (Users) ses.getAttribute("user");
 			ses.invalidate();
 			res.setStatus(200);
-			res.getWriter().println("Logged out successfully");
-			log.info("Logged out");
+			log.info("Logged out successfully");
 		} else {
 			res.setStatus(400);
-			res.getWriter().println("You must be logged in to logout!");
+			log.warn("You must be logged in to logout!");
 		}
 	}
 	

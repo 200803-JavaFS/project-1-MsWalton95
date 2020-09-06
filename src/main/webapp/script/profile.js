@@ -1,5 +1,7 @@
 const url = "http://127.0.0.1:8080/project0/";
-let user=1;
+let info = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),
+{});
+let user = info.id;
 //user data.userID to link from login to others
 /* API and Time */
 

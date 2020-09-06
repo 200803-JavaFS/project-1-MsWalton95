@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimb;
 import com.revature.models.ReimbStatus;
 import com.revature.models.ReimbType;
+import com.revature.models.Users;
 import com.revature.services.ReimbService;
 import com.revature.services.ReimbStatusService;
 import com.revature.services.ReimbTypeService;
@@ -79,8 +81,10 @@ public class ReimbController {
 		}
 	}
 	
-	public void getAllReimbByUser(HttpServletResponse res, int id) throws IOException {
-		List<Reimb> all = rs.selectByUser(id);
+	public void getAllReimbByUser(HttpServletResponse res, HttpServletRequest req) throws IOException {
+		HttpSession ses = req.getSession();
+		Users u = (Users) ses.getAttribute("user");
+		List<Reimb> all = rs.selectByUser(u.getUserID());
 
 		if(all.isEmpty()) {
 			res.setStatus(204);
@@ -93,7 +97,7 @@ public class ReimbController {
 	}       
 	
 	
-	public void addReimb(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void addReimb(HttpServletRequest req, HttpServletResponse res, int user, int type) throws IOException {
 		BufferedReader reader = req.getReader();
 		
 		StringBuilder s = new StringBuilder();
@@ -106,10 +110,13 @@ public class ReimbController {
 		}
 		
 		String body = new String(s);
+
+		HttpSession ses = req.getSession();
+		Users u = (Users) ses.getAttribute("user");
 		
-		Reimb r = om.readValue(body, Reimb.class);
-		
-		if (rs.insert(r)) {
+		Reimb re = om.readValue(body, Reimb.class);
+						
+		if (rs.insert(re, user, type)) {
 			res.setStatus(201);
 			log.info("New Ticket was created");
 		} else {

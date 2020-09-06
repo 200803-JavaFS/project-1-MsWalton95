@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Users;
@@ -15,7 +19,7 @@ public class UserController {
 	private static UserService us = new UserService();
 	private static ObjectMapper om = new ObjectMapper();
 	
-	
+	private static final Logger log = LogManager.getLogger(UserController.class);
 	
 	public void getUser(HttpServletResponse res, int id) throws IOException {
 		Users u = us.selectbyId(id);
@@ -30,6 +34,7 @@ public class UserController {
 	}
 	
 	public void getAllUsers(HttpServletResponse res) throws IOException {
+
 		res.setStatus(200);
 		List<Users> all = us.selectAll();
 		String json = om.writeValueAsString(all);
@@ -59,9 +64,10 @@ public class UserController {
 		
 		if (us.insert(u)) {
 			res.setStatus(201);
-			res.getWriter().println("New user was created");
+			log.info("New User added");
 		} else {
 			res.setStatus(403);
+			log.warn("Unble to add user");
 		}
 		
 	}

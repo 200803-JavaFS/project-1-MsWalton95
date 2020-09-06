@@ -13,8 +13,6 @@ CSS
 
 To-do
    - IMPORTANT
-	Connect login users to other pages
 	Add Tickets
 	Update Tickets
 	Search Ticket
-	Logging

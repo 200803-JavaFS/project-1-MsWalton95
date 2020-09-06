@@ -1,5 +1,7 @@
-let user =1;
 const url = "http://127.0.0.1:8080/project0/";
+let info = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),
+{});
+let user = info.id;
 
 viewTickets(user);
 async function viewTickets(user) {
@@ -144,9 +146,6 @@ async function viewTickets(user) {
         }else{
             $("#resolver").html(data[0].resolver);
         }
-        //$("#resolver").html(data[0].resolver.firstName + " " + data[0].resolver.lastName); // addEventListener("click", event =>{
-
-        // });
     }
 }
 async function updateTicketFunc(){

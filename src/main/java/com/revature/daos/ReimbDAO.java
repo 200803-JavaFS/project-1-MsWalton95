@@ -11,30 +11,40 @@ import org.hibernate.query.Query;
 
 import com.revature.daoimpl.IReimbDAO;
 import com.revature.models.Reimb;
+import com.revature.models.ReimbStatus;
+import com.revature.models.ReimbType;
+import com.revature.models.Users;
 import com.revature.util.HibernateUtil;
 
 public class ReimbDAO implements IReimbDAO{
-	private static final Logger log = LogManager.getLogger(ReimbDAO.class);
 	
 	public ReimbDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean insert(Reimb re) {
+	public boolean insert(Reimb re, int user, int type) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		try {
 			tx = ses.beginTransaction();
+			
+			ReimbStatus status = ses.get(ReimbStatus.class, 2);
+			ReimbType types = ses.get(ReimbType.class, type);
+			Users users = ses.get(Users.class, user);
 
+			re.setType(types);
+			re.setStatus(status);
+			re.setAuthor(users);
+			
 			ses.save(re);
 			tx.commit();
-			log.info("Ticket added");
+
 			return true;
 			
 		}catch(HibernateException e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace();
-			log.warn("Unable to add ticket");
+		
 			return false;
 		}
 	}
@@ -48,13 +58,13 @@ public class ReimbDAO implements IReimbDAO{
 
 			ses.merge(re);		
 			tx.commit();
-			log.info("Ticket updated");
+			
 			return true;
 			
 		}catch(HibernateException e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace();
-			log.warn("Unable to add ticket");
+		
 			return false;
 		}
 		
@@ -71,7 +81,6 @@ public class ReimbDAO implements IReimbDAO{
 			}else{
 				return re;
 			}
-			
 		}catch(HibernateException e) {
 			e.printStackTrace();
 		}
