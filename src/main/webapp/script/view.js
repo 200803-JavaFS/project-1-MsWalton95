@@ -292,11 +292,8 @@ async function viewManagerTickets() {
                     $("#status").html(status);
                     $("#type").html(type);
                     $("#author").html(author);
-                    if(ticket.resolver ==  null){
-                        $("#resolver").html("N/A");
-                    }else{
-                        $("#resolver").html(`${ticket.resolver.firstName}  ${ticket.resolver.lastName}`);
-                    }
+                    $("#resolver").html(`${ticket.resolver.firstName}  ${ticket.resolver.lastName}`);
+
                 }, 600);
             });
         }
@@ -318,18 +315,16 @@ async function getTicket(stat, id){
         credentials: 'include',
     }); 
     
-    if (res.status === 200) {
+    if (res.status === 200 && res3.status === 200) {
         let dataTicket = await res.json();
         let dataStatus = await res2.json();
         let dataUser = await res3.json();
-
-        console.log(dataTicket);console.log(dataStatus);console.log(dataUser);
 
         updateTicketFunc(dataTicket, dataStatus, dataUser);
     }
 }  
 
-async function updateTicketFunc(ticket, stat, resolveUser){
+async function updateTicketFunc(ticket, stat, resolv){
     //reimbID, resolved, status, resolver
     let date = ticket.submitted;
     let submit = new Date(date).toUTCString();
@@ -344,10 +339,11 @@ async function updateTicketFunc(ticket, stat, resolveUser){
         status : stat,
         type : ticket.type,
         author : ticket.author,
-        resolver : resolveUser 
-    }
+        resolver : resolv
+    };
+    console.log(tickets);
     //reimbursement/user/1/status/3
-    let res = await fetch(`${url}reimbursement/user/${ticket.reimbID}/status/${stat.statusID}`, {
+    let res = await fetch(`${url}reimbursement/user/${resolv.userID}/status/${stat.statusID}`, {
         method: 'POST',
         body: JSON.stringify(tickets),
         credentials: 'include'
@@ -355,7 +351,7 @@ async function updateTicketFunc(ticket, stat, resolveUser){
 
     if (res.status === 200) {
         let data = await res.json();
-        console.log(data);
+        console.log(`data: ${data}`);
         let login = setTimeout(() => open("/profile.html","_self"), 3000); 
     }else{
         console.log("Issues have occurred");
