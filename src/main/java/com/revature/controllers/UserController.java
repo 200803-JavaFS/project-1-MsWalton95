@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,23 +22,32 @@ public class UserController {
 	
 	public void getUser(HttpServletResponse res, int id) throws IOException {
 		Users u = us.selectbyId(id);
+		
 		if(u == null) {
 			res.setStatus(204);
+			log.warn("Unable to find user");
 		} else {
 			res.setStatus(200);
+			log.info("User was found");
+			
 			String json = om.writeValueAsString(u);
 			res.getWriter().println(json);
 		}
-		
 	}
 	
 	public void getAllUsers(HttpServletResponse res) throws IOException {
-
-		res.setStatus(200);
 		List<Users> all = us.selectAll();
-		String json = om.writeValueAsString(all);
-		res.getWriter().println(json);	
 		
+		if(all.isEmpty()) {
+			res.setStatus(204);
+			log.warn("Unable to find any users");
+		} else {
+			res.setStatus(200);
+			log.info("Found all users");
+			
+			String json = om.writeValueAsString(all);
+			res.getWriter().println(json);
+		}
 	}
 
 	public void addUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -56,19 +64,14 @@ public class UserController {
 		
 		String body = new String(s);
 		
-		System.out.println(body);
-		
 		Users u = om.readValue(body, Users.class);
-		
-		System.out.println(u);
 		
 		if (us.insert(u)) {
 			res.setStatus(201);
 			log.info("New User added");
 		} else {
 			res.setStatus(403);
-			log.warn("Unble to add user");
+			log.warn("Unable to add user");
 		}
-		
 	}
 }

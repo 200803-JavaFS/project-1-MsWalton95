@@ -7,7 +7,8 @@ import com.revature.daos.ReimbStatusDAO;
 import com.revature.models.ReimbStatus;
 
 public class ReimbStatusService {
-public static IReimbStatusDAO rsDao = new ReimbStatusDAO();
+	
+	public static IReimbStatusDAO rsDao = new ReimbStatusDAO();
 	
 	public boolean insert(ReimbStatus re) {
 		return rsDao.insert(re);

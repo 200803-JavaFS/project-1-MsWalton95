@@ -2,9 +2,9 @@ const url = "http://127.0.0.1:8080/project0/";
 let info = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),
 {});
 let user = info.id;
-//user data.userID to link from login to others
-/* API and Time */
+let role = info.role;
 
+/* API and Time */
 //Random Facts
 let catfact = document.getElementById("catfact");
 
@@ -64,7 +64,7 @@ randomFacts();
 setInterval(clock, 1000);
 
 /* Retrieve User Information */
-
+addEventListener("onload", getProfile(user));
 async function getProfile(user){
    let resp = await fetch(url + "user/" + user,{
        credentials: "include"
@@ -78,26 +78,80 @@ async function getProfile(user){
    }
 }
 
-async function getTicket(user){
-    let res = await fetch(url + "reimbursement/user/" + user,{
-        credentials: "include"
-    });
+if(role == 1){
+    getEmployeeTicket(user);
+}else{
+    getManagerTicket();
+}
+
+async function getEmployeeTicket(user){
+let res = await fetch(url + "reimbursement/user/" + user,{
+    credentials: "include"
+});
 
     if(res.status === 200){
         let data = await res.json();
 
         const recent = data.splice(0,5);
 
+        for (let ticket of recent) {
+            
+            let date = new Date(ticket.submitted).toLocaleDateString();
+            let time = new Date(ticket.submitted).toLocaleTimeString();
+            let submitted =`${date} ${time}`;
+
+            let date2 = new Date(ticket.resolved).toLocaleDateString();
+            let time2 = new Date(ticket.resolved).toLocaleTimeString();
+            let resolved =`${date2} ${time2}`;
+
+            let row = document.createElement("tr");
+            let cell = document.createElement("td");
+            cell.innerHTML = ticket.reimbID;
+            row.appendChild(cell);
+            let cell2 = document.createElement("td");
+            cell2.innerHTML = `$${ticket.amount}`;
+            row.appendChild(cell2);
+            let cell3 = document.createElement("td");
+            cell3.innerHTML = submitted;
+            row.appendChild(cell3);
+            if(ticket.resolved == null){
+                let cell4 = document.createElement("td");
+                cell4.innerHTML = "N/A";
+                row.appendChild(cell4);
+            }else{
+                let cell4 = document.createElement("td");
+                cell4.innerHTML = resolved;
+                row.appendChild(cell4);
+            }
+            let cell6 = document.createElement("td");
+            cell6.innerHTML = ticket.status.status;
+            row.appendChild(cell6);
+
+            document.getElementById("profileTicket").appendChild(row);
+        }
+    }
+}
+
+async function getManagerTicket(){
+    let res = await fetch(url + "reimbursement/",{
+        credentials: "include"
+    });
+    
+        if(res.status === 200){
+            let data = await res.json();
+    
+            const recent = data.splice(0,5);
+    
             for (let ticket of recent) {
                 
                 let date = new Date(ticket.submitted).toLocaleDateString();
                 let time = new Date(ticket.submitted).toLocaleTimeString();
                 let submitted =`${date} ${time}`;
-
+    
                 let date2 = new Date(ticket.resolved).toLocaleDateString();
                 let time2 = new Date(ticket.resolved).toLocaleTimeString();
                 let resolved =`${date2} ${time2}`;
-
+    
                 let row = document.createElement("tr");
                 let cell = document.createElement("td");
                 cell.innerHTML = ticket.reimbID;
@@ -120,11 +174,11 @@ async function getTicket(user){
                 let cell6 = document.createElement("td");
                 cell6.innerHTML = ticket.status.status;
                 row.appendChild(cell6);
-
+    
                 document.getElementById("profileTicket").appendChild(row);
             }
+        }
     }
-}
 
-addEventListener("onload", getProfile(user));
-addEventListener("onload", getTicket(user));
+
+

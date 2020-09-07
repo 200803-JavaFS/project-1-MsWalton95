@@ -2,7 +2,6 @@ package com.revature.models;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -15,8 +14,8 @@ public class UserRole implements Serializable{
 	private int roleID;
 	@Column(nullable=false, length=20)
 	private String userRole;
-	@OneToMany(mappedBy="roleID")
-    private Set<Users> users;
+	@OneToMany(mappedBy="roleID", cascade= CascadeType.ALL)
+    private List<Users> users;
 	
 	public UserRole() {
 		// TODO Auto-generated constructor stub
@@ -83,7 +82,4 @@ public class UserRole implements Serializable{
 		return true;
 	}
 
-
-
-	
 }

@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -14,12 +14,10 @@ public class ReimbStatus implements Serializable{
 	private int statusID;
 	@Column(nullable=false, length=10)
 	private String status;
-	@OneToMany(mappedBy="status")
-    private Set<Reimb> reimbs;
+	@OneToMany(mappedBy="status", cascade= CascadeType.ALL)
+    private List<Reimb> reimbs;
 	
-	public ReimbStatus() {
-		// TODO Auto-generated constructor stub
-	}
+	public ReimbStatus() {}
 
 	public ReimbStatus(int statusID, String status) {
 		super();

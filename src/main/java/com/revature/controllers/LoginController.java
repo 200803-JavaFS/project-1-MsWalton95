@@ -57,7 +57,9 @@ public class LoginController {
 		Users u = us.selectbyId(users.get(0).getUserID()); 
 
 		res.setStatus(200);
+		
 		HttpSession ses = req.getSession();
+		
 		ses.setAttribute("user", u);
 		ses.setAttribute("loggedin", true);
 		
@@ -74,7 +76,7 @@ public class LoginController {
 			Users u = (Users) ses.getAttribute("user");
 			ses.invalidate();
 			res.setStatus(200);
-			log.info("Logged out successfully");
+			log.info(u.getUsername() + "has logged out successfully");
 		} else {
 			res.setStatus(400);
 			log.warn("You must be logged in to logout!");

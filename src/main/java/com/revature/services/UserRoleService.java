@@ -7,7 +7,8 @@ import com.revature.daos.UserRoleDAO;
 import com.revature.models.UserRole;
 
 public class UserRoleService {
-private static IUserRoleDAO urDao = new UserRoleDAO();
+	
+	private static IUserRoleDAO urDao = new UserRoleDAO();
 	
 	public boolean insert(UserRole ur) {
 		return urDao.insert(ur);

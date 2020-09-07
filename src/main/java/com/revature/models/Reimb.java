@@ -39,10 +39,8 @@ public class Reimb implements Serializable{
 	@JoinColumn(nullable=true)
 	private Users resolver;
 	
-	public Reimb() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public Reimb() {}
+	
 	public Reimb(int reimbID, double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status,
 			ReimbType type, Users author, Users resolver) {
 		super();
@@ -56,6 +54,7 @@ public class Reimb implements Serializable{
 		this.author = author;
 		this.resolver = resolver;
 	}
+	
 	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status, ReimbType type,
 			Users author, Users resolver) {
 		super();
@@ -69,18 +68,7 @@ public class Reimb implements Serializable{
 		this.resolver = resolver;
 	}
 	
-	//Insert
-	public Reimb(double amount, Timestamp submitted, String description, ReimbStatus status, ReimbType type, Users author) {
-		super();
-		this.amount = amount;
-		this.submitted = submitted;
-		this.description = description;
-		this.status = status;
-		this.type = type;
-		this.author = author;
-	}
-	
-	//UpTimestamp
+	//Update
 	public Reimb(int reimbID, Timestamp resolved, ReimbStatus status, Users resolver) {
 		super();
 		this.reimbID = reimbID;
@@ -88,6 +76,24 @@ public class Reimb implements Serializable{
 		this.status = status;
 		this.resolver = resolver;
 	}
+	
+	public Reimb(double amount, Timestamp submitted, String description, ReimbStatus status) {
+		this.amount = amount;
+		this.submitted = submitted;
+		this.description = description;
+		this.status = status;
+	}
+	//amount, submitted, resolved, description, status, resolver
+	public Reimb(double amount, Timestamp submitted, Timestamp resolved, String description, ReimbStatus status, Users resolver) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+		this.status = status;
+		this.resolver = resolver;
+	}
+
 	@Override
 	public String toString() {
 		return "Reimb [reimbID=" + reimbID + ", amount=" + amount + ", submitted=" + submitted + ", resolved="
@@ -147,6 +153,7 @@ public class Reimb implements Serializable{
 	public void setResolver(Users resolver) {
 		this.resolver = resolver;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -164,6 +171,7 @@ public class Reimb implements Serializable{
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

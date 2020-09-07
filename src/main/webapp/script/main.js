@@ -9,7 +9,7 @@ async function addTicketFunc(){
      //INSERT: amount, submitted, description, type, author
     //Retrieve type, author
     let amt = document.getElementById("addAmount").value;
-    var submit = new Date().toUTCString(); 
+    let submit = new Date().toUTCString(); 
     let desc = document.getElementById("addDescription").value;
     let typ = document.getElementById("addType").value;
     
@@ -33,7 +33,7 @@ async function addTicketFunc(){
     });
 
     let resUser = await fetch(url + "user/" + user, {
-        credentials: 'include',
+        credentials: 'include'
     });
 
     if(resType.status === 200 && resUser.status === 200){
@@ -57,11 +57,17 @@ async function addTicketFunc(){
         
          if (res.status === 201) {
             let data = await res.json();
-            console.log(data)
-            let login = setTimeout(() => open("/profile.html"), 3000); 
+            console.log(data);
+            let ticketStatus = document.getElementById("ticketStatus");
+            ticketStatus.innerHTML = "Ticket added";
+            ticketStatus.setAttribute("color", "green");
+            let login = setTimeout(() => open("/profile.html","_self"), 3000); 
         
         } else{
-            console.log("something is wrong")
+            let ticketStatus = document.getElementById("ticketStatus");
+            ticketStatus.innerHTML = "Unable to add ticket";
+            ticketStatus.setAttribute("color", "red");
       }  
     }
 }
+

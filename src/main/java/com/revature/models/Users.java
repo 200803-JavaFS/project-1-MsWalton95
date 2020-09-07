@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,17 +35,14 @@ public class Users implements Serializable{
 	@JoinColumn(nullable=false)
 	private UserRole roleID;
 	@OneToMany(mappedBy="author")
-    private Set<Reimb> reimb1;
+    private List<Reimb> reimb1;
 	@OneToMany(mappedBy="resolver")
-    private Set<Reimb> reimb2;
+    private List<Reimb> reimb2;
 
-	public Users() {
-		// TODO Auto-generated constructor stub
-	}
+	public Users() {}
 
 	//Update
 	public Users(int userID, String username, String password, String firstName, String lastName, String email, UserRole roleID) {
-		super();
 		this.userID = userID;
 		this.username = username;
 		this.password = password;
@@ -57,7 +54,6 @@ public class Users implements Serializable{
 
 	//Insert
 	public Users(String username, String password, String firstName, String lastName, String email, UserRole roleID) {
-		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -136,6 +132,8 @@ public class Users implements Serializable{
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((reimb1 == null) ? 0 : reimb1.hashCode());
+		result = prime * result + ((reimb2 == null) ? 0 : reimb2.hashCode());
 		result = prime * result + ((roleID == null) ? 0 : roleID.hashCode());
 		result = prime * result + userID;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -170,6 +168,16 @@ public class Users implements Serializable{
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
+			return false;
+		if (reimb1 == null) {
+			if (other.reimb1 != null)
+				return false;
+		} else if (!reimb1.equals(other.reimb1))
+			return false;
+		if (reimb2 == null) {
+			if (other.reimb2 != null)
+				return false;
+		} else if (!reimb2.equals(other.reimb2))
 			return false;
 		if (roleID == null) {
 			if (other.roleID != null)

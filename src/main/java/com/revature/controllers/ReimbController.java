@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimb;
 import com.revature.models.ReimbStatus;
 import com.revature.models.ReimbType;
-import com.revature.models.Users;
 import com.revature.services.ReimbService;
 import com.revature.services.ReimbStatusService;
 import com.revature.services.ReimbTypeService;
@@ -37,10 +35,10 @@ public class ReimbController {
 			res.setStatus(204);
 		} else {
 			res.setStatus(200);
+			
 			String json = om.writeValueAsString(r);
 			res.getWriter().println(json);
 		}
-		
 	}
 	
 	public void getType(HttpServletResponse res, int id) throws IOException {
@@ -48,12 +46,14 @@ public class ReimbController {
 		
 		if(t == null) {
 			res.setStatus(204);
+			log.warn("No type found");
 		} else {
 			res.setStatus(200);
+			log.info("Type found");
+			
 			String json = om.writeValueAsString(t);
 			res.getWriter().println(json);
 		}
-		
 	}
 	
 	public void getStatus(HttpServletResponse res, int id) throws IOException {
@@ -61,8 +61,10 @@ public class ReimbController {
 		
 		if(s == null) {
 			res.setStatus(204);
+			log.warn("No status found");
 		} else {
 			res.setStatus(200);
+			log.info("Status found");
 			String json = om.writeValueAsString(s);
 			res.getWriter().println(json);
 		}	
@@ -73,24 +75,26 @@ public class ReimbController {
 		
 		if(all.isEmpty()) {
 			res.setStatus(204);
-			res.getWriter().println("There are no tickets");
+			log.warn("No tickets found");
 		}else {
 			res.setStatus(200);
+			log.info("Tickets found");
+			
 			String json = om.writeValueAsString(all);
 			res.getWriter().println(json);
 		}
 	}
 	
-	public void getAllReimbByUser(HttpServletResponse res, HttpServletRequest req) throws IOException {
-		HttpSession ses = req.getSession();
-		Users u = (Users) ses.getAttribute("user");
-		List<Reimb> all = rs.selectByUser(u.getUserID());
+	public void getAllReimbByUser(HttpServletResponse res, HttpServletRequest req, int id) throws IOException {
+		List<Reimb> all = rs.selectByUser(id);
 
 		if(all.isEmpty()) {
 			res.setStatus(204);
-			res.getWriter().println("There are no tickets by this user");
+			log.warn("No ticket found by this user");
 		}else {
 			res.setStatus(200);
+			log.info("Ticket found");
+			
 			String json = om.writeValueAsString(all);
 			res.getWriter().println(json);
 		}
@@ -111,9 +115,6 @@ public class ReimbController {
 		
 		String body = new String(s);
 
-		HttpSession ses = req.getSession();
-		Users u = (Users) ses.getAttribute("user");
-		
 		Reimb re = om.readValue(body, Reimb.class);
 						
 		if (rs.insert(re, user, type)) {
@@ -125,7 +126,7 @@ public class ReimbController {
 		}
 	}
 	
-	public void updateReimb(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void updateReimb(HttpServletRequest req, HttpServletResponse res, int user, int status) throws IOException {
 		BufferedReader reader = req.getReader();
 		
 		StringBuilder s = new StringBuilder();
@@ -139,10 +140,10 @@ public class ReimbController {
 		
 		String body = new String(s);
 		
-		Reimb r = om.readValue(body, Reimb.class);
+		Reimb re = om.readValue(body, Reimb.class);
 		
-		if(rs.update(r)) {
-			res.setStatus(202); //Accepted
+		if(rs.update(re, user, status)) {
+			res.setStatus(200);
 			log.info("New Ticket was updated");
 		} else {
 			res.setStatus(403);

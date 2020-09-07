@@ -5,17 +5,17 @@ import java.util.List;
 import com.revature.daoimpl.IReimbDAO;
 import com.revature.daos.ReimbDAO;
 import com.revature.models.Reimb;
-import com.revature.models.Users;
 
 public class ReimbService {
+	
 	public static IReimbDAO reDao = new ReimbDAO();
 	
 	public boolean insert(Reimb re, int user, int type) { 
 		return reDao.insert(re, user, type);
 	}
 	
-	public boolean update(Reimb re) {
-		return reDao.update(re);
+	public boolean update(Reimb re, int user, int status) {
+		return reDao.update(re, user, status);
 	}
 	
 	public Reimb selectbyId(int id) {

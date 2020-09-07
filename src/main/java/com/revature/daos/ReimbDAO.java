@@ -1,9 +1,9 @@
 package com.revature.daos;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,11 +17,9 @@ import com.revature.models.Users;
 import com.revature.util.HibernateUtil;
 
 public class ReimbDAO implements IReimbDAO{
-	
-	public ReimbDAO() {
-		// TODO Auto-generated constructor stub
-	}
+	public ReimbDAO() {}
 
+	@Override
 	public boolean insert(Reimb re, int user, int type) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
@@ -30,109 +28,92 @@ public class ReimbDAO implements IReimbDAO{
 			
 			ReimbStatus status = ses.get(ReimbStatus.class, 2);
 			ReimbType types = ses.get(ReimbType.class, type);
-			Users users = ses.get(Users.class, user);
+			Users author = ses.get(Users.class, user);
 
 			re.setType(types);
 			re.setStatus(status);
-			re.setAuthor(users);
+			re.setAuthor(author);
 			
 			ses.save(re);
 			tx.commit();
 
 			return true;
-			
 		}catch(HibernateException e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace();
-		
 			return false;
 		}
 	}
 	
-	public boolean update(Reimb re) {
+	public boolean update(Reimb re, int user, int status) {
 		Session ses = HibernateUtil.getSession();
 		Transaction tx = null;
 		
 		try {
 			tx = ses.beginTransaction();
+			
+			ReimbStatus statuses = ses.get(ReimbStatus.class, status);
+			Users resolver = ses.get(Users.class, user);
+			
+			Calendar calendar = Calendar.getInstance();
+			Timestamp current = new Timestamp(calendar.getTime().getTime());
+			
+			re.setReimbID(re.getReimbID());
+			re.setStatus(statuses);
+			re.setResolver(resolver);
+			re.setResolved(current);
 
 			ses.merge(re);		
 			tx.commit();
 			
 			return true;
-			
 		}catch(HibernateException e) {
 			if (tx!=null) tx.rollback();
-			e.printStackTrace();
-		
+			
 			return false;
 		}
-		
 	}
 	
 	public Reimb selectbyId(int id) {
 		Session ses = HibernateUtil.getSession();
-		
-		try {
-			Reimb re = ses.get(Reimb.class, id);
-			
-			if(re == null) {
-				return null;
-			}else{
-				return re;
-			}
-		}catch(HibernateException e) {
-			e.printStackTrace();
+		Reimb re = ses.get(Reimb.class, id);
+
+		if(re != null) {
+			return re;
+		} else {
+			return null;
 		}
-		
-		return null;
 	}
 	
 	public List<Reimb> selectAll(){
 		Session ses = HibernateUtil.getSession();
+		String hql = "FROM Reimb";
+	
+		@SuppressWarnings("unchecked")
+		Query<Reimb> query = ses.createQuery(hql);
+		List<Reimb> results = query.list();
 
-		try {
-			String hql = "FROM Reimb";
-		
-			@SuppressWarnings("unchecked")
-			Query<Reimb> query = ses.createQuery(hql);
-			List<Reimb> results = query.list();
-			
-			if(results.isEmpty()) {
-				return null;
-			}else{
-				return results;
-			}
-			
-		}catch(HibernateException e) {
-			e.printStackTrace();
+		if(results.isEmpty()) {
+			return null;
+		} else {
+			return results;
 		}
-		
-		return null;
 	}
 	
 	public List<Reimb> selectByUser(int id){
 		Session ses = HibernateUtil.getSession();
+		String hql = "FROM Reimb WHERE author.userID=:u";
 		
-		try {
-			String hql = "FROM Reimb WHERE author.userID=:u";
-			
-			@SuppressWarnings("unchecked")
-			Query<Reimb> query = ses.createQuery(hql);
-			query.setParameter("u", id);
-			List<Reimb> results = query.list();
-			
-			
-			if(results.isEmpty()) {
-				return null;
-			}else{
-				return results;
-			}
-		}catch(HibernateException e) {
-			e.printStackTrace();
+		@SuppressWarnings("unchecked")
+		Query<Reimb> query = ses.createQuery(hql);
+		query.setParameter("u", id);
+		List<Reimb> results = query.list();System.out.println("Select By user"+results);
+
+		if(results.isEmpty()) {
+			return null;
+		} else {
+			return results;
 		}
-		
-		return null;
 	}
 
 }

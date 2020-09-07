@@ -7,7 +7,8 @@ import com.revature.daos.ReimbTypeDAO;
 import com.revature.models.ReimbType;
 
 public class ReimbTypeService {
-private static IReimbTypeDAO reDao = new ReimbTypeDAO();
+	
+	private static IReimbTypeDAO reDao = new ReimbTypeDAO();
 	
 	public boolean insert(ReimbType re) {
 		return reDao.insert(re);
