@@ -46,8 +46,7 @@ public class Driver {
 		Users u4 = new Users("emp4", "emp4", "Miles", "Edgeworth", "milesedgeworth@aceattorney.com", role2);
 		Users u5 = new Users("emp5", "emp5", "Bobby", "Fulbright", "bobbyfulbright@aceattorney.com", role2);
 	
-//		user.insert(u1);user.insert(u2); user.insert(u3);
-//		user.insert(u4);user.insert(u5);
+//		user.insert(u1);user.insert(u2); user.insert(u3);user.insert(u4);user.insert(u5);
 
 		ReimbStatus status1 = status.selectbyId(1);
 		ReimbStatus status2 = status.selectbyId(2);
@@ -83,8 +82,10 @@ public class Driver {
 		Reimb r9 = new Reimb(98.75, current, "Detention Center", status2);//Pending 2 Travel 3
 		Reimb r10 = new Reimb(58.50, current, current2, "Kurain Village", status1, resolver1);//Accepted 1 Travel 3
 		
-//		reimb.insert(r1, 1, 1);reimb.insert(r2, 1, 2);reimb.insert(r3, 2, 2);reimb.insert(r4,1,4);reimb.insert(r5,1,4);
-//		reimb.insert(r6,2,3);reimb.insert(r7,2,4);reimb.insert(r8,1,1);reimb.insert(r9,1,3);reimb.insert(r10,1,3);
+		//reimb.insert(r1, 1, 1);reimb.insert(r2, 1, 2);reimb.insert(r3, 2, 2);
+//		reimb.insert(r4,1,4);reimb.insert(r5,1,4);
+		reimb.insert(r6,2,3);reimb.insert(r7,2,4);reimb.insert(r8,1,1);
+//		reimb.insert(r9,1,3);reimb.insert(r10,1,3);
 
 	}
 

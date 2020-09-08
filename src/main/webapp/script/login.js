@@ -14,12 +14,18 @@ async function loginFunc() {
         method:"POST",
         body: JSON.stringify(user),
         credentials: "include"
-    })
+    });
+
+    document.getElementById("loginStatus").innerText = "Loading...";    
 
     if (res.status === 200) {
+        let loading = document.getElementById("loginStatus");
+        loading.innerText = "Loading...";
+        loading.style.color = "silver";   
       try{
+         
         let data = await res.json();
-        document.getElementById("loginStatus").innerText = "Welcome back!";
+        document.getElementById("loginStatus").innerText = `Welcome back ${data.firstName}!`;
 
         document.cookie = `id=${data.userID}`;
         document.cookie = `firstname=${data.firstName}`;
@@ -33,7 +39,10 @@ async function loginFunc() {
     } else if(res.status === 401) {
         document.getElementById("loginStatus").innerText = "Sorry! Wrong input";
     }  else{
-        console.log("Sorry")
+        console.log("Sorry");
     }
 
 }
+
+
+

@@ -2,7 +2,7 @@ const url = "http://127.0.0.1:8080/project0/";
 let info = document.cookie.split(';').map(cookie => cookie.split('=')).reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value)}),
 {});
 let user = info.id;
-let role = info.role;console.log(`role: ${role}`);
+let role = info.role;
 
 if(role == 1){
     viewTickets(user);
@@ -20,6 +20,24 @@ async function viewTickets(user) {
         
         const pend = data.filter(ticket => ticket.status.status === "Pending");
         const comp = data.filter(ticket => ticket.status.status !== "Pending");
+
+        $("#searchBtn").click(()=>{
+            let numbers = /^\d+$/;
+            let input = $("#searchInput").val();   
+            if(input !== ""){
+                if(numbers.test(input)){
+                    searchTicket(input);
+                }else{
+                    let notFound = $("#searchStatus");
+                    notFound.html("Ticket not found");
+                    setTimeout(()=> notFound.hide(), 3000);
+                }
+            }else{
+                let notFound = $("#searchStatus");
+                notFound.html("Please input a number");
+                setTimeout(()=> notFound.hide(), 3000);
+            }
+         });
 
         for (let ticket of pend) {
             let reimb = ticket.reimbID;
@@ -47,7 +65,7 @@ async function viewTickets(user) {
             contain.className = "trans";
             container.appendChild(contain);
             let cell3 = document.createElement("h3");
-            cell3.innerHTML = amount;
+            cell3.innerHTML = `$${amount}`;
             container.appendChild(cell3);
             container.className = "transaction";
             document.getElementById("pending").appendChild(container);
@@ -56,7 +74,7 @@ async function viewTickets(user) {
                 $("#details").fadeTo(500, 0.5).fadeTo(100,1);
                 setTimeout(()=>{
                 $("#ticket").html(reimb);
-                $("#amount").html(amount);
+                $("#amount").html(`$${amount}`);
                 $("#submitted").html(submitted);
                 $("#resolved").html(resolved);
                 $("#description").html(description);
@@ -105,7 +123,7 @@ async function viewTickets(user) {
                 $("#details").fadeTo(500, 0.5).fadeTo(100,1);
                 setTimeout(()=>{
                     $("#ticket").html(reimb);
-                    $("#amount").html(amount);
+                    $("#amount").html(`$${amount}`);
                     $("#submitted").html(submitted);
                     $("#resolved").html(resolved);
                     $("#description").html(description);
@@ -129,7 +147,7 @@ async function viewTickets(user) {
         let resolved = date2;
 
         $("#ticket").html(data[0].reimbID);
-        $("#amount").html(data[0].amount);
+        $("#amount").html(`$${data[0].amount}`);
         $("#submitted").html(submitted);
         if(ticket.resolved ==  null){
             $("#resolved").html("N/A");
@@ -137,7 +155,7 @@ async function viewTickets(user) {
             $("#resolved").html(resolved);
         }
         $("#description").html(data[0].description);
-        $("#status").html(data[0].status.status);
+        $("#status").html("In process...");
         $("#type").html(data[0].type.type);
         $("#author").html(data[0].author.firstName + " " + data[0].author.lastName);
         if(ticket.resolver ==  null){
@@ -145,7 +163,6 @@ async function viewTickets(user) {
         }else{
             $("#resolver").html(data[0].resolver);
         }
-
         $("#approveBtn").hide();
         $("#denyBtn").hide();
     }
@@ -170,6 +187,8 @@ async function viewManagerTickets() {
                 let id = $("#ticket").html();
                 let stat = 1;
                 getTicket(stat, id);
+            } else{
+                $("#updateStatus").html("Cannot update a completed ticket");
             }
             
         });
@@ -178,7 +197,9 @@ async function viewManagerTickets() {
                 let id = $("#ticket").html();
                 let stat = 3;
                 getTicket(stat, id);
-            };
+            }else{
+                $("#updateStatus").html("Cannot update a completed ticket");
+            }
         });
         
         let date = new Date(data[0].submitted).toLocaleDateString();
@@ -188,7 +209,7 @@ async function viewManagerTickets() {
         let resolved = date2;
 
         $("#ticket").html(data[0].reimbID);
-        $("#amount").html(data[0].amount);
+        $("#amount").html(`$${data[0].amount}`);
         $("#submitted").html(submitted);
         if(ticket.resolved ==  null){
             $("#resolved").html("N/A");
@@ -204,7 +225,25 @@ async function viewManagerTickets() {
         }else{
             $("#resolver").html(data[0].resolver);
         }   
-//For Pending and Complete
+        
+        $("#searchBtn").click(()=>{
+            let numbers = /^\d+$/;
+            let input = $("#searchInput").val();   
+            if(input !== ""){
+                if(numbers.test(input)){
+                    searchTicket(input);
+                }else{
+                    let notFound = $("#searchStatus");
+                    notFound.html("Ticket not found");
+                    setTimeout(()=> notFound.hide(), 3000);
+                }
+            }else{
+                let notFound = $("#searchStatus");
+                notFound.html("Please input a number");
+                setTimeout(()=> notFound.hide(), 3000);
+            }
+         });
+        //For Pending and Complete
         for (let ticket of pend) {
             let reimb = ticket.reimbID;
             let amount = ticket.amount;
@@ -227,7 +266,7 @@ async function viewManagerTickets() {
             contain.className = "trans";
             container.appendChild(contain);
             let cell3 = document.createElement("h3");
-            cell3.innerHTML = amount;
+            cell3.innerHTML = `$${amount}`;
             container.appendChild(cell3);
             container.className = "transaction";
             document.getElementById("pending").appendChild(container);
@@ -236,7 +275,7 @@ async function viewManagerTickets() {
                 $("#details").fadeTo(500, 0.5).fadeTo(100,1);
                 setTimeout(()=>{
                     $("#ticket").html(reimb);
-                    $("#amount").html(amount);
+                    $("#amount").html(`$${amount}`);
                     $("#submitted").html(submitted);
                     $("#resolved").html(resolved);
                     $("#description").html(description);
@@ -285,22 +324,23 @@ async function viewManagerTickets() {
                 $("#details").fadeTo(500, 0.5).fadeTo(100,1);
                 setTimeout(()=>{
                     $("#ticket").html(reimb);
-                    $("#amount").html(amount);
+                    $("#amount").html(`$${amount}`);
                     $("#submitted").html(submitted);
                     $("#resolved").html(resolved);
                     $("#description").html(description);
                     $("#status").html(status);
                     $("#type").html(type);
                     $("#author").html(author);
+                    if(ticket.resolver ==  null){
+                        $("#resolver").html("N/A");
+                    }else{
                     $("#resolver").html(`${ticket.resolver.firstName}  ${ticket.resolver.lastName}`);
-
+                    }
                 }, 600);
             });
         }
     }
 }
-
-
 
 async function getTicket(stat, id){
     let res = await fetch(url + "reimbursement/" + id, {
@@ -321,6 +361,10 @@ async function getTicket(stat, id){
         let dataUser = await res3.json();
 
         updateTicketFunc(dataTicket, dataStatus, dataUser);
+    } else {
+        let notFound = $("#searchStatus");
+        notFound.html("Ticket not found");
+        setTimeout(()=> notFound.hide(), 3000);
     }
 }  
 
@@ -341,19 +385,58 @@ async function updateTicketFunc(ticket, stat, resolv){
         author : ticket.author,
         resolver : resolv
     };
-    console.log(tickets);
     //reimbursement/user/1/status/3
     let res = await fetch(`${url}reimbursement/user/${resolv.userID}/status/${stat.statusID}`, {
         method: 'POST',
         body: JSON.stringify(tickets),
         credentials: 'include'
     });
-
+    
     if (res.status === 200) {
-        let data = await res.json();
-        console.log(`data: ${data}`);
-        let login = setTimeout(() => open("/profile.html","_self"), 3000); 
+        let update = $("#updateStatus");
+        update.html("Ticket Updated").css("color", "darkgreen");
+        setTimeout(()=> update.hide(), 3000);
+        let login = setTimeout(() => open("/viewTicket.html","_self"), 3000); 
     }else{
-        console.log("Issues have occurred");
+        let update = $("#updateStatus");
+        update.html("Unable to update ticket").css("color", "darkred");
+        setTimeout(()=> update.hide(), 3000);
     }
 }
+
+async function searchTicket(input){
+    let res = await fetch(url + "reimbursement/" + input, {
+        credentials: 'include',
+    }); 
+    
+    if (res.status === 200) {
+        let data = await res.json();
+
+        let submitted = new Date(data.submitted).toLocaleDateString();
+        let resolved = new Date(data.resolved).toLocaleDateString();
+
+        $("#details").fadeTo(500, 0.5).fadeTo(100,1);
+        setTimeout(()=>{
+            $("#ticket").html(data.reimbID);
+            $("#amount").html(data.amount);
+            $("#submitted").html(submitted);
+            if(data.resolved == null){
+                $("#resolver").html("N/A");
+            } else { 
+                $("#resolved").html(resolved);
+            }
+            $("#description").html(data.description);
+            $("#status").html(data.status.status);
+            $("#type").html(data.type.type);
+            $("#author").html(`${data.author.firstName} ${data.author.lastName}`);
+            if(data.resolver == null){
+                $("#resolver").html("N/A");
+            } else { 
+                $("#resolver").html(`${data.resolver.firstName}  ${data.resolver.lastName}`);
+            }
+        }, 600);
+
+    }
+}
+
+

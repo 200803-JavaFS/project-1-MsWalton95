@@ -47,27 +47,29 @@ async function addTicketFunc(){
             type : dataType,
             author : dataUser
         }
-        console.log(ticket);
 
         let res = await fetch(`${url}reimbursement/user/${user}/type/${typ}`, {
             method: 'POST',
             body: JSON.stringify(ticket),
             credentials: 'include'
          });
-        
+
          if (res.status === 201) {
-            let data = await res.json();
-            console.log(data);
             let ticketStatus = document.getElementById("ticketStatus");
             ticketStatus.innerHTML = "Ticket added";
-            ticketStatus.setAttribute("color", "green");
+            ticketStatus.style.color = "darkgreen";
             let login = setTimeout(() => open("/profile.html","_self"), 3000); 
         
-        } else{
+        } else {
             let ticketStatus = document.getElementById("ticketStatus");
             ticketStatus.innerHTML = "Unable to add ticket";
-            ticketStatus.setAttribute("color", "red");
-      }  
+            ticketStatus.style.color = "darkred";
+         }  
+
+    } else{
+        let ticketStatus = document.getElementById("ticketStatus");
+            ticketStatus.innerHTML = "Unable to add ticket";
+            ticketStatus.style.color = "darkred";
     }
 }
 
